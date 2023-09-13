@@ -1,0 +1,10 @@
+.decodedText {
+    overflow: scroll;
+    max-width: 48%;
+    height: 500px;
+}
+
+.error {
+    font-weight: bold;
+    color: red;
+}

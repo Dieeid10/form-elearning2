@@ -1,0 +1,29 @@
+.imgBackroundFront::after{
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-image: url('../../public/img/frente.webp');
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    opacity: .1;
+    filter: grayscale(1);
+}
+
+.imgBackroundBack::after{
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-image: url('../../public/img/dorso.webp');
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    opacity: .1;
+    filter: grayscale(1);
+}
