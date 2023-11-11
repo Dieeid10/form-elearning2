@@ -5,7 +5,7 @@ const title = "Confirme sus datos:"
 
 export function ConfirmData () {
     const { dataStudent } = useDataStudent()
-    const prevForm = dataStudent.younger == 'true' ? "FormDataAdulto" : "FormDataAdulto"
+    const prevForm = dataStudent.younger == 'true' ? "FormDataAdulto" : "FormData"
 
     const data = {
         obj1: { name: 'name', id: 'name', label: 'Nombre:', type: 'text', placeholder: '', key: 'nameStudentConfirm', value: dataStudent.name },

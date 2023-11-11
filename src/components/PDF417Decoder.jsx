@@ -8,12 +8,15 @@ export function PDF417Decoder({frontOrBack}) {
     const [imgUrl, setImgUrl] = useState('');
     const [setDataDni] = useState(null);
     const { decodePDF417 } = usePDF417Decoder()
-    const { error, setError } = useError()
+    const { error, changeError } = useError()
     const { updateData } = useDataStudent()
 
     const handleFiles = async (f) => {
         const file = f.target.files[0];
-        console.log(file)
+        if( file.size === 0 || !file.type.match('image.*')) {
+          changeError('El archivo no es una imagen válida, debe ser un archivo de tipo imagen como un jpg o png.')
+          return
+        }
         const newUrlImg = URL.createObjectURL(file)
         setImgUrl(newUrlImg)
         const newImage = {
@@ -46,7 +49,7 @@ export function PDF417Decoder({frontOrBack}) {
       }, [imgUrl])
 
     return (
-        <form>
+        <form className='z-10'>
             <input
                 type="file"
                 id="file"

@@ -7,7 +7,7 @@ const data = {
     obj2: { name: 'emailConfirm', id: 'emailConfirm', label: 'Confirme su Email:', type: 'email', placeholder: 'mimail@dominio.com', key: 'confirmEmailStudentForm' },
   }
 
-const title = "Ingrese su mail:"
+const title = "Ingrese su mail del alumno:"
 
 const nextForm = "FormData"
 

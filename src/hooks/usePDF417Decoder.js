@@ -1,14 +1,12 @@
 
 import { useState } from 'react';
 import { useDataStudent } from './useDataStudent';
-import { useStep } from './useStepForm';
 import { useError } from './useError';
 
 export function usePDF417Decoder() {
   const [decodedContent, setDecodedContent] = useState(null);
   const { changeError } = useError()
   const { updateData } = useDataStudent()
-  const { setStep } = useStep()
 
   const decodePDF417 = (ctx, img, frontOrBack) => {
     
@@ -36,8 +34,6 @@ export function usePDF417Decoder() {
       updateData(newDataDni)
       setDecodedContent(newDataDni)
       console.log(newDataDni)
-      const newStep = frontOrBack == 'front' ? 'DropzoneBack' : 'DropzoneFront'
-      setStep(newStep)
       changeError(null)
     } catch (error) {
       console.error('Error al decodificar el código PDF417:', error)

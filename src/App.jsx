@@ -36,10 +36,7 @@ function App() {
       />
       {steps[step]}
       
-      {/* <div className=' absolute top-9 h-20 w-20 bg-violet-300 blur-md rounded-full z-1'></div> */}
-      {/* <ImageDropzone /> */}
-      {/* <PDF417Decoder /> */}
-      { IS_DEVELOPMENT && <Footer dataStudent={dataStudent} /> }
+      {/* { IS_DEVELOPMENT && <Footer dataStudent={dataStudent} /> } */}
     </>
   )
 }

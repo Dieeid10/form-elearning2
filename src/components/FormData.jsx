@@ -14,7 +14,7 @@ const data = {
 
 export function FormData () {
     const { dataStudent } = useDataStudent()
-    const title = dataStudent.younger == 'true' ? "Ingrese los datos del alumno menor de edad: " : "Complete con sus datos:"
+    const title = dataStudent.younger == 'true' ? "Ingrese los datos del alumno menor de edad: " : "Complete con los datos del alumno que realizará la cursada:"
     const next = dataStudent.younger == 'true' ? "FormDataAdulto" : "ConfirmData"
     console.log(dataStudent['younger'])
 
