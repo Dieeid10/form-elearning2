@@ -2,10 +2,11 @@ import { useDataStudent } from "../hooks/useDataStudent"
 import { useStep } from "../hooks/useStepForm"
 import { Buttoms } from "./Buttoms"
 import { Input } from "./Input"
-import { IconArrowNarrowRight } from '@tabler/icons-react'
+import { Country } from "./Country"
+import { SelectProvinces } from "./SelectProvincy"
 
-export const Form = ({ data, validateData = null, title, error = null, nextForm = null, documentForm = null, youngerSelect = null, prevForm = null }) => {
-  const { updateData } = useDataStudent()
+export const Form = ({ data, validateData = null, title, error = null, nextForm = null, documentForm = null, youngerSelect = null, prevForm = null, address = false }) => {
+  const { updateData, dataStudent } = useDataStudent()
   const { setStep } = useStep()
 
   const handleSubmit = (event) => {
@@ -58,6 +59,7 @@ export const Form = ({ data, validateData = null, title, error = null, nextForm 
 
           {
             !!documentForm &&
+            !address &&
             <fieldset 
               className="w-2/3"
             >
@@ -83,6 +85,7 @@ export const Form = ({ data, validateData = null, title, error = null, nextForm 
 
           {
             !!documentForm &&
+            !address &&
             <Input
               key={documentForm.numberToDocument.key}
               name={documentForm.numberToDocument.name}
@@ -92,8 +95,36 @@ export const Form = ({ data, validateData = null, title, error = null, nextForm 
             />
           }
 
-{
+          {
+            !!address &&
+            (
+              <>
+                <Country />
+                {
+                  dataStudent.country === 'AR' &&
+                  <SelectProvinces />
+                }
+                <Input
+                  key='addressStudentForm'
+                  name='address'
+                  id='address'
+                  label='Ingrese su dirección: '
+                  type='text'
+                />
+                <Input
+                  key='provinceStudentFormData'
+                  name='CP'
+                  id='CP'
+                  label='Ingrese su código postal: '
+                  type='text'
+                />
+              </>
+            )
+          }
+
+          {
             !!youngerSelect &&
+            !address &&
             <fieldset 
               className="w-2/3"
             >

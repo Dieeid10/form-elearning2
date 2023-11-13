@@ -1,7 +1,7 @@
 import { useDataStudent } from "../hooks/useDataStudent"
 import { Form } from "./Form"
 
-const title = "Confirme sus datos:"
+const title = "Confirme sus datos del alumno que realizará la cursada:"
 
 export function ConfirmData () {
     const { dataStudent } = useDataStudent()
