@@ -17,8 +17,8 @@ export function FormMail () {
 
     const prevForm = dataStudent.nTramite ? null : "FormDataStudent"
 
-    const validateMail = (dataStudent) => {
-        const { email, emailConfirm } = dataStudent
+    const validateMail = (newDataStudent) => {
+        const { email, emailConfirm } = newDataStudent
         if(email !== emailConfirm) {
             setError("El mail no coincide")
         }

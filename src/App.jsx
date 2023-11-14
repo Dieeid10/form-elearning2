@@ -3,7 +3,6 @@ import { ImageDropzone } from './components/Drag&Drop'
 import { Footer } from './components/Footer'
 import { FormMail } from './components/FormMail'
 import { IS_DEVELOPMENT } from './config'
-import { useDataStudent } from './hooks/useDataStudent'
 import { useStep } from './hooks/useStepForm'
 import './components/cube.css'
 import { SelectChargingMode } from './components/SelectChargingMode'
@@ -12,6 +11,7 @@ import { FormData } from './components/FormData'
 import { FormDataAdulto } from './components/FormDataAdulto'
 import { ConfirmData } from './components/ConfirmData'
 import { FormDataStudent } from './components/formDataStudent'
+import { useError } from './hooks/useError'
 
 const steps = {
   formMail: <FormMail className='' />,
@@ -25,7 +25,7 @@ const steps = {
 }
 
 function App() {
-  const { dataStudent } = useDataStudent()
+  const { error } = useError()
   const { step } = useStep()
 
   return (
@@ -35,7 +35,6 @@ function App() {
         className='absolute inset-0 bg-grid-slate-900/[0.04] bg-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] dark:bg-bottom dark:border-b dark:border-slate-100/5 -z-10' 
       />
       {steps[step]}
-      
       {/* { IS_DEVELOPMENT && <Footer dataStudent={dataStudent} /> } */}
     </>
   )

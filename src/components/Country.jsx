@@ -9,6 +9,7 @@ export function Country() {
   const { dataFilteded, updateFilter, filter } = useFilter({ data: countryJson })
   const [ valueInput, setValueInput ] = useState("")
   const [ isActive, setIsActive ] = useState(false)
+  const [ valueInputShort, setValueInputShort ] = useState('')
   const { updateData } = useDataStudent()
   const fieldset = useId()
 
@@ -22,6 +23,7 @@ export function Country() {
     const value = e.target.value
     const textButton = e.target.innerText
     setValueInput(textButton)
+    setValueInputShort(value)
     updateFilter("")
     setIsActive(!isActive)
     updateData({ country: value })
@@ -49,6 +51,7 @@ export function Country() {
         readOnly
         required 
       />
+      <input type="text" name='countryShort' id='countryShort' value={valueInputShort} hidden />
       <div className={`absolute w-full flex flex-col transition-transform rounded-b-lg z-20 ${ isActive ? "h-40 overflow-auto" : "h-0 overflow-hidden" }`} >
         <div className='flex bg-black border-y border-sky-300 text-sky-500'>
           <input 

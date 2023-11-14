@@ -7,6 +7,7 @@ export function SelectProvinces() {
   const { dataFilteded, updateFilter, filter } = useFilter({ data: pronvincesJson })
   const [ valueInput, setValueInput ] = useState("")
   const [ isActive, setIsActive ] = useState(false)
+  const [ valueInputShort, setValueInputShort ] = useState('')
   const fieldset = useId()
 
   const handleChange = (e) => {
@@ -19,6 +20,7 @@ export function SelectProvinces() {
     const value = e.target.value
     const textButton = e.target.innerText
     setValueInput(textButton)
+    setValueInputShort(value)
     updateFilter("")
     setIsActive(!isActive)
   }
@@ -35,13 +37,16 @@ export function SelectProvinces() {
       <label htmlFor="country" className='block mb-2 text-sm font-medium text-gray-300' >Seleccione su provincia: </label>
       <input 
         onClick={visibilityOptions} 
-        type="text" 
+        type="text"
+        name='province'
+        id='province'
         value={valueInput} 
         className={`w-full inputToSelect p-2.5 outline-none bg-black text-sky-300 placeholder:text-sky-300 cursor-pointer ${ isActive ? "rounded-t-lg" : "rounded-lg" } `} 
         placeholder='Provincia...'
         readOnly
         required 
       />
+      <input type="text" name='provinceShort' id='provinceShort' value={valueInputShort} hidden />
       <div className={`absolute flex flex-col transition-transform rounded-b-lg ${ isActive ? "h-40 overflow-auto" : "h-0 overflow-hidden" }`} >
         <div className='flex bg-black border-y border-sky-300 '>
           <input 

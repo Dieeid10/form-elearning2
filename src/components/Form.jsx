@@ -4,8 +4,11 @@ import { Buttoms } from "./Buttoms"
 import { Input } from "./Input"
 import { Country } from "./Country"
 import { SelectProvinces } from "./SelectProvincy"
+import { useError } from "../hooks/useError"
+import { Error } from "./Error"
 
-export const Form = ({ data, validateData = null, title, error = null, nextForm = null, documentForm = null, youngerSelect = null, prevForm = null, address = false }) => {
+export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, youngerSelect = null, prevForm = null, address = false }) => {
+  const { error } = useError()
   const { updateData, dataStudent } = useDataStudent()
   const { setStep } = useStep()
 
@@ -150,11 +153,7 @@ export const Form = ({ data, validateData = null, title, error = null, nextForm 
 
           {
             !!error &&
-            <div
-              className="block border absolute top-10 text-lg rounded-lg block p-2.5 bg-white/80 broder-gray-600 text-red-700 rounded-full opacity-90 ease-out duration-75 hover:opacity-100"
-            >
-              {error}
-            </div>
+            <Error />
           }
           <Buttoms prevForm={prevForm} />
         </form>

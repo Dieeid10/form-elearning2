@@ -1,3 +1,5 @@
+import { useDataStudent } from "../hooks/useDataStudent"
+import { useError } from "../hooks/useError"
 import { Form } from "./Form"
 
 const data = {
@@ -14,7 +16,19 @@ const nextForm = "ConfirmData"
 const prevForm = "FormData"
 
 export function FormDataAdulto () {
+    const { dataStudent } = useDataStudent()
+    const { changeError } = useError()
+
+    const validateData = (newDataStudent) => {
+        const { documentAdult } = newDataStudent
+        console.log(documentAdult, dataStudent.documentNumber)
+        if ( dataStudent.documentNumber === documentAdult ) {
+            changeError("El número de documento del alumno y el número documento del adulto responsable no pueden ser el mismo.")
+            return false
+        }
+    }
+
     return (
-        <Form data={data} title={title} nextForm={nextForm} prevForm={prevForm} />
+        <Form validateData={validateData} data={data} title={title} nextForm={nextForm} prevForm={prevForm} />
     )
 }
