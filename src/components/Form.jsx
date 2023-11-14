@@ -2,23 +2,27 @@ import { useDataStudent } from "../hooks/useDataStudent"
 import { useStep } from "../hooks/useStepForm"
 import { Buttoms } from "./Buttoms"
 import { Input } from "./Input"
-import { Country } from "./Country"
-import { SelectProvinces } from "./SelectProvincy"
 import { useError } from "../hooks/useError"
 import { Error } from "./Error"
+import { DocumentForm } from "./DocumentFormComponent"
+import { Address } from "./Address"
+import { useIsYounger } from "../hooks/useIsYounger"
 
-export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, youngerSelect = null, prevForm = null, address = false }) => {
-  const { error } = useError()
+export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, prevForm = null, address = false }) => {
+  const { error, changeError } = useError()
   const { updateData, dataStudent } = useDataStudent()
   const { setStep } = useStep()
+  const { isYounger } = useIsYounger()
 
   const handleSubmit = (event) => {
     event.preventDefault()
     const dataFormStudent = Object.fromEntries(new window.FormData(event.target))
     if (validateData) {
       const result = validateData(dataFormStudent)
+      
       if(!result) {
-        console.log('Datos incorrectos')
+        if(error !== '') return
+        changeError('Datos incorrectos')
         return
       }
     }
@@ -29,19 +33,29 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
   const handleInputChange = (e, index) => {
     const newInputValues = {} 
     newInputValues[index] = e.target.value 
+    if (e.target.type === 'date'){
+      isYounger(e.target.value)
+        .then((result) => {
+          newInputValues['younger'] = result
+          updateData(newInputValues)
+        })
+        .catch((error) => {
+          console.error("Error al obtener el resultado:", error);
+      });
+    }
     updateData(newInputValues)
   }
 
 
     return (
-      <section className=" h-full w-full flex flex-col justify-center items-center mirrorEffect p-10">
+      <section className=" h-full w-full flex flex-col justify-center items-center mirrorEffect p-8">
         <h3
           className="text-xl text-white font-medium text-gray-300 self-start mx-10"
         >
           {title}
         </h3>
         <form 
-          className="flex w-2/3 h-full flex-col justify-around items-center"
+          className="flex w-2/3 h-full flex-col justify-around items-center my-2 gap-2"
           onSubmit = { handleSubmit } 
           >
 
@@ -63,30 +77,10 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
           {
             !!documentForm &&
             !address &&
-            <fieldset 
-              className="w-2/3"
-            >
-              <label 
-                className='block mb-2 text-sm font-medium text-gray-300'
-              >
-                {documentForm.label}
-              </label>
-              <select 
-                className='border text-sm rounded-lg block w-full p-2.5 bg-sky-200 broder-gray-600 placeholder-gray-400 text-sky-500 rounded-full'
-                name={documentForm.nameType}
-              >
-                {
-                  documentForm.typeToDocument.map(type => (
-                    <option key={type.value} value={type.value}>
-                      {type.label}
-                    </option>
-                  ))
-                }
-              </select>
-            </fieldset>
+            <DocumentForm documentForm={documentForm} Input={Input} />
           }
 
-          {
+          {/* {
             !!documentForm &&
             !address &&
             <Input
@@ -96,59 +90,11 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
               label={documentForm.numberToDocument.label}
               type={documentForm.numberToDocument.type}
             />
-          }
+          } */}
 
           {
             !!address &&
-            (
-              <>
-                <Country />
-                {
-                  dataStudent.country === 'AR' &&
-                  <SelectProvinces />
-                }
-                <Input
-                  key='addressStudentForm'
-                  name='address'
-                  id='address'
-                  label='Ingrese su dirección: '
-                  type='text'
-                />
-                <Input
-                  key='provinceStudentFormData'
-                  name='CP'
-                  id='CP'
-                  label='Ingrese su código postal: '
-                  type='text'
-                />
-              </>
-            )
-          }
-
-          {
-            !!youngerSelect &&
-            !address &&
-            <fieldset 
-              className="w-2/3"
-            >
-              <label 
-                className='block mb-2 text-sm font-medium text-gray-300'
-              >
-                {youngerSelect.labelYounger}
-              </label>
-              <select 
-                className='border text-sm rounded-lg block w-full p-2.5 bg-sky-200 broder-gray-600 placeholder-gray-400 text-sky-500 rounded-full'
-                name={youngerSelect.nameYoungerSelect}
-              >
-                {
-                  youngerSelect.youngerOptions.map(type => (
-                    <option key={type.value} value={type.value}>
-                      {type.label}
-                    </option>
-                  ))
-                }
-              </select>
-            </fieldset>
+            <Address dataStudent={dataStudent} Input={Input} />
           }
 
           {

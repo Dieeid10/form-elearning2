@@ -26,6 +26,7 @@ export function FormDataAdulto () {
             changeError("El número de documento del alumno y el número documento del adulto responsable no pueden ser el mismo.")
             return false
         }
+        return true
     }
 
     return (

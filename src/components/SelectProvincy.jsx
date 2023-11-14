@@ -47,7 +47,7 @@ export function SelectProvinces() {
         required 
       />
       <input type="text" name='provinceShort' id='provinceShort' value={valueInputShort} hidden />
-      <div className={`absolute flex flex-col transition-transform rounded-b-lg ${ isActive ? "h-40 overflow-auto" : "h-0 overflow-hidden" }`} >
+      <div className={`absolute flex flex-col transition-transform rounded-b-lg ${ isActive ? "h-40 overflow-auto" : "h-0 overflow-hidden" } w-full`} >
         <div className='flex bg-black border-y border-sky-300 '>
           <input 
             type="text" 

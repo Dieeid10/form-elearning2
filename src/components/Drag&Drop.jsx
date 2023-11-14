@@ -17,6 +17,7 @@ export function ImageDropzone({ frontOrBack }) {
 
   let prevForm = frontOrBack === 'front' ? 'selectMode' : 'DropzoneFront'
   let title = frontOrBack === 'front' ? 'Ingrese la imagen frontal del DNI' : 'Ingrese la parte posterior del DNI'
+  let nextButton = frontOrBack === 'front' ? (dataStudent.documentNumber ? true : false) : (dataStudent.backImageFile ? true : false)
   
   const handleSubmitForm = async (event) => {
     event.preventDefault()
@@ -63,7 +64,7 @@ export function ImageDropzone({ frontOrBack }) {
         }
       </div>
       <form onSubmit={handleSubmitForm}>
-       <Buttoms prevForm={prevForm} nextButton={ dataStudent.documentNumber ? true : false } />
+       <Buttoms prevForm={prevForm} nextButton={ nextButton } />
       </form>
     </section>
   );
