@@ -2,7 +2,7 @@ export function DocumentForm ({ documentForm, Input }) {
   return (
     <>
     <fieldset 
-      className="w-2/3"
+      className="w-full sm:w-2/3"
     >
       <label 
         className='block mb-2 text-sm font-medium text-gray-300'

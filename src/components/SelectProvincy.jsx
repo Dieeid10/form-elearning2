@@ -31,7 +31,7 @@ export function SelectProvinces() {
 
   return (
     <fieldset 
-      className="w-2/3 relative"
+      className="w-full sm:w-2/3 relative"
       key={fieldset}
     >
       <label htmlFor="country" className='block mb-2 text-sm font-medium text-gray-300' >Seleccione su provincia: </label>

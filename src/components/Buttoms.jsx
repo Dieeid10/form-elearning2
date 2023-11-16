@@ -16,7 +16,7 @@ export function Buttoms ({ prevForm, nextButton = true }) {
           {
             prevForm &&
           <button 
-            className="w-1/5 flex justify-center border text-sm rounded-lg block p-2.5 bg-white/5 broder-gray-600 text-white rounded-full self-start ease-out duration-75 hover:bg-white/20 hover:scale-110 active:bg-white/50"
+            className="w-1/4 flex justify-center border text-sm rounded-lg block p-2.5 bg-white/5 broder-gray-600 text-white rounded-full self-start ease-out duration-75 hover:bg-white/20 hover:scale-110 active:bg-white/50 px-4"
             type='button'
             onClick={handlePrev}
           >
@@ -27,7 +27,7 @@ export function Buttoms ({ prevForm, nextButton = true }) {
             step != 'ConfirmData' &&
             nextButton &&
             <button 
-              className="w-1/5 flex justify-center border text-sm rounded-lg block p-2.5 bg-white/5 broder-gray-600 text-white rounded-full self-end ease-out duration-75 hover:bg-white/20 hover:scale-110 active:bg-white/50"
+              className="w-1/4 flex justify-center border text-sm rounded-lg block p-2.5 bg-white/5 broder-gray-600 text-white rounded-full self-end ease-out duration-75 hover:bg-white/20 hover:scale-110 active:bg-white/50"
               type='submit'
             >
               Siguiente <IconArrowNarrowRight />
@@ -36,7 +36,7 @@ export function Buttoms ({ prevForm, nextButton = true }) {
           {
             step === 'ConfirmData' &&
             <button 
-              className="w-1/5 flex justify-center border text-sm rounded-lg block p-2.5 bg-white/5 broder-gray-600 text-white rounded-full self-end ease-out duration-75 hover:bg-white/20 hover:scale-110 active:bg-white/50"
+              className="w-1/4 flex justify-center border text-sm rounded-lg block p-2.5 bg-white/5 broder-gray-600 text-white rounded-full self-end ease-out duration-75 hover:bg-white/20 hover:scale-110 active:bg-white/50"
               type='submit'
             >
               Enviar

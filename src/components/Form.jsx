@@ -48,7 +48,7 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
 
 
     return (
-      <section className=" h-full w-full flex flex-col justify-center items-center mirrorEffect p-8">
+      <section className="h-full w-full flex flex-col justify-center items-center mirrorEffect p-2">
         <h3
           className="text-xl text-white font-medium text-gray-300 self-start mx-10"
         >
@@ -79,18 +79,6 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
             !address &&
             <DocumentForm documentForm={documentForm} Input={Input} />
           }
-
-          {/* {
-            !!documentForm &&
-            !address &&
-            <Input
-              key={documentForm.numberToDocument.key}
-              name={documentForm.numberToDocument.name}
-              id={documentForm.numberToDocument.id}
-              label={documentForm.numberToDocument.label}
-              type={documentForm.numberToDocument.type}
-            />
-          } */}
 
           {
             !!address &&
