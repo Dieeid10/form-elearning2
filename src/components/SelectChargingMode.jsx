@@ -16,7 +16,7 @@ export function SelectChargingMode () {
     return (
         <section className=" h-full w-full flex flex-col mirrorEffect">
             <header className="flex justify-center pt-10">
-                <h1 className="text-3xl text-white">Elija la forma de cargar su datos:</h1>
+                <h1 className="text-3xl text-white">¿El alumno que realizará la cursada posee DNI argentino?</h1>
             </header>
             <menu className="flex justify-around items-center p-4 w-full h-full box-border">
                 <button 

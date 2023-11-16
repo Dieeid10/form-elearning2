@@ -25,7 +25,7 @@ export function useDrop({frontOrBack}) {
       const milisecondsInYear = 1000 * 60 * 60 * 24 * 365.25
       const diferenceYear = diferenceMS / milisecondsInYear
       if(Math.floor(diferenceYear) >= 18) {
-        updateData({younger: true})
+        updateData({younger: false})
       } else {
         updateData({younger: true})
       }
