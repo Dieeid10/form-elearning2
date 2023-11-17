@@ -11,7 +11,7 @@ const data = {
 
 const title = "Ingrese los datos del adulto responsable del alumno menor de edad:"
 
-const nextForm = "ConfirmData"
+const nextForm = "AuthorizationForm"
 
 const prevForm = "FormData"
 

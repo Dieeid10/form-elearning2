@@ -12,6 +12,7 @@ import { FormDataAdulto } from './components/FormDataAdulto'
 import { ConfirmData } from './components/ConfirmData'
 import { FormDataStudent } from './components/formDataStudent'
 import { useDataStudent } from './hooks/useDataStudent'
+import { AuthorizationForm } from './components/AuthorizationForm'
 
 const steps = {
   formMail: <FormMail className='' />,
@@ -21,7 +22,8 @@ const steps = {
   FormData: <FormData />,
   FormDataAdulto: <FormDataAdulto />, 
   ConfirmData: <ConfirmData />,
-  FormDataStudent: <FormDataStudent />
+  FormDataStudent: <FormDataStudent />,
+  AuthorizationForm: <AuthorizationForm />
 }
 
 function App() {
@@ -35,6 +37,7 @@ function App() {
         className='absolute inset-0 bg-grid-slate-900/[0.04] bg-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] dark:bg-bottom dark:border-b dark:border-slate-100/5 -z-10' 
       />
       {steps[step]}
+      
       { IS_DEVELOPMENT && <Footer dataStudent={dataStudent} /> }
     </>
   )

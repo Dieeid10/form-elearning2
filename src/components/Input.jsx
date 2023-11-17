@@ -1,8 +1,10 @@
 import { useId } from "react"
 
-export const Input = ({ id, name, label, type, placeholder, value, ...porps }) => {
+
+export const Input = ({ id, name, label, type, placeholder, value, min, max, ...porps }) => {
   const fieldset = useId()
   const inputId = useId()
+  console.log(max)
 
       return (
         <fieldset 
@@ -15,10 +17,12 @@ export const Input = ({ id, name, label, type, placeholder, value, ...porps }) =
             type={type} 
             id={inputId} 
             name={name} 
-            placeholder={placeholder} 
+            placeholder={placeholder}
             {...porps} 
             required 
             value={value}
+            {...(min && { min: min })}
+            {...(max && { max: max })}
           />
         </fieldset>
       )

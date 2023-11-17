@@ -7,8 +7,9 @@ import { Error } from "./Error"
 import { DocumentForm } from "./DocumentFormComponent"
 import { Address } from "./Address"
 import { useIsYounger } from "../hooks/useIsYounger"
+import { AuthorizationText } from "./AuthorizationText"
 
-export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, prevForm = null, address = false }) => {
+export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, prevForm = null, address = false, AuthorizationText = false }) => {
   const { error, changeError } = useError()
   const { updateData, dataStudent } = useDataStudent()
   const { setStep } = useStep()
@@ -60,6 +61,7 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
           >
 
           {
+            data &&
             Object.keys(data).map((key) => (
               <Input 
                 key={data[key].key}
@@ -70,8 +72,16 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
                 placeholder={data[key].placeholder}
                 value={data[key].value}
                 onChange={(e) => handleInputChange(e, data[key].name)}
+                max={data[key].max || false}
+                min={data[key].min || false}
+                
               />
             ))
+          }
+
+          {
+            !!AuthorizationText &&
+            <AuthorizationText />
           }
 
           {

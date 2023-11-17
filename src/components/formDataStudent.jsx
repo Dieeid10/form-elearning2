@@ -1,13 +1,14 @@
 import { useIsYounger } from "../hooks/useIsYounger"
 import { Form } from "./Form"
 
-const atualyDate = new Date()
-console.log(atualyDate)
+const currentYear = new Date().getFullYear();
+const max = `${currentYear}-01-01`
+console.log(max)
 
 const data = {
     obj1: { name: 'name', id: 'name', label: 'Nombre:', type: 'text', placeholder: 'Ernesto Pedro', key: 'nameStudentFormData' },
     obj2: { name: 'lastName', id: 'lastName', label: 'Apellido:', type: 'text', placeholder: 'Gonzalez', key: 'lastNameStudentFormData' },
-    obj3: { name: 'birthdate', id: 'birthdate', label: 'Fecha de nacimiento:', type: 'date', placeholder: '', key: 'birthdateStudentFormData', min:'1950-01-01', max:'' },
+    obj3: { name: 'birthdate', id: 'birthdate', label: 'Fecha de nacimiento:', type: 'date', placeholder: '', key: 'birthdateStudentFormData', min:'1920-01-01', max: max },
 }
 
 const documentForm = {
