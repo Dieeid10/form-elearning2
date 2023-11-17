@@ -42,7 +42,7 @@ export function ImageDropzone({ frontOrBack }) {
         style={{ border: '2px dashed #ccc', padding: '20px', textAlign: 'center' }}
         onDragOver={handleDragOver}
         onDrop={ handleDrop}
-        className= {`h-full w-full flex justify-center items-center gap-2 rounded-xl relative  ${ !imageSrc && (frontOrBack == 'front' ? 'imgBackroundFront' : 'imgBackroundBack') }`}
+        className= {`h-full w-full flex justify-center items-center flex-col sm:flex-row gap-2 rounded-xl relative  ${ !imageSrc && (frontOrBack == 'front' ? 'imgBackroundFront' : 'imgBackroundBack') }`}
       >
         {
           imageSrc && 
