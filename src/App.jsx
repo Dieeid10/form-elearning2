@@ -20,7 +20,7 @@ const steps = {
   DropzoneBack: <ImageDropzone frontOrBack='back' />,
   selectMode: <SelectChargingMode />,
   FormData: <FormData />,
-  FormDataAdulto: <FormDataAdulto />, 
+  FormDataAdulto: <FormDataAdulto />,
   ConfirmData: <ConfirmData />,
   FormDataStudent: <FormDataStudent />,
   AuthorizationForm: <AuthorizationForm />
@@ -32,9 +32,9 @@ function App() {
 
   return (
     <>
-      <div 
-        id='cube' 
-        className='absolute inset-0 bg-grid-slate-900/[0.04] bg-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] dark:bg-bottom dark:border-b dark:border-slate-100/5 -z-10' 
+      <div
+        id='cube'
+        className='absolute inset-0 bg-grid-slate-900/[0.04] bg-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] dark:bg-bottom dark:border-b dark:border-slate-100/5 -z-10'
       />
       {steps[step]}
       
