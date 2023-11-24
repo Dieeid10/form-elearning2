@@ -7,7 +7,6 @@ import { Error } from "./Error"
 import { DocumentForm } from "./DocumentFormComponent"
 import { Address } from "./Address"
 import { useIsYounger } from "../hooks/useIsYounger"
-import { AuthorizationText } from "./AuthorizationText"
 
 export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, prevForm = null, address = false, AuthorizationText = false }) => {
   const { error, changeError } = useError()
@@ -99,7 +98,7 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
             !!error &&
             <Error />
           }
-          <Buttoms prevForm={prevForm} />
+          <Buttoms prevForm={prevForm} nextButton={nextForm} />
         </form>
       </section>
     )
