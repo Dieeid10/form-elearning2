@@ -73,7 +73,7 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
                 onChange={(e) => handleInputChange(e, data[key].name)}
                 max={data[key].max || false}
                 min={data[key].min || false}
-                
+                pattern={data[key].pattern || false}
               />
             ))
           }
