@@ -2,24 +2,29 @@
 import { useState } from 'react';
 import { useDataStudent } from './useDataStudent';
 import { useError } from './useError';
+import { BrowserMultiFormatReader, BarcodeFormat } from '@zxing/library';
 
 export function usePDF417Decoder() {
   const [decodedContent, setDecodedContent] = useState(null);
   const { changeError } = useError()
   const { updateData } = useDataStudent()
 
-  const decodePDF417 = (ctx, img, frontOrBack) => {
+  const decodePDF417 = async (ctx, img, frontOrBack) => {
     
     try {
-      const source = new ZXing.BitmapLuminanceSource(ctx, img)
-      const binarizer = new ZXing.Common.HybridBinarizer(source)
-      const bitmap = new ZXing.BinaryBitmap(binarizer)
-      const resultJson = ZXing.PDF417.PDF417Reader.decode(bitmap, null, false)
-      if ( resultJson[0] == '' ) {
+      console.log(frontOrBack)
+      if(frontOrBack === 'back') return
+      const codeReader = new BrowserMultiFormatReader();
+
+      const resultJson = await codeReader.decodeFromImage(img);
+      console.log(resultJson['text'])
+      
+      if ( resultJson['text'] == '' || !resultJson ) {
         changeError('Error al decodificar el código PDF417. Por favor, asegúrate de que la imagen contenga un código PDF417 válido.')
         return
       }
-      const dataDni = resultJson[0]?.Text.split('@')
+      const dataDni = resultJson['text'].split('@')
+      console.log(dataDni)
       const newDataDni = {
           nTramite: dataDni[0] ?? 'n/d',
           lastName: dataDni[1] ?? 'n/d',

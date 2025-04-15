@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tabler/icons-react": "2.32.0",
+    "@zxing/library": "^0.21.3",
     "happy-dom": "^12.0.1",
     "normalize.css": "8.0.1",
     "react": "18.2.0",
