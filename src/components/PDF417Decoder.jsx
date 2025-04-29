@@ -53,10 +53,10 @@ export function PDF417Decoder({frontOrBack, mode}) {
           {
             mode == 'drag' ?
             <input
-                type="file"
-                id="file"
-                onChange={handleFiles}
-                className='hidden'
+              type="file"
+              id="file"
+              onChange={handleFiles}
+              className='hidden'
             /> :
             <input
               type="file"
@@ -64,6 +64,7 @@ export function PDF417Decoder({frontOrBack, mode}) {
               onChange={handleFiles}
               accept="image/*"
               capture="environment"
+              className='hidden'
             />
           }
             <label 
