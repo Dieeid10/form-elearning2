@@ -2,11 +2,11 @@ import { useDrop } from "../hooks/useDrop"
 import { PDF417Decoder } from "./PDF417Decoder"
 import { useError } from '../hooks/useError'
 import './imgBackround.css'
-import { Buttoms } from "./Buttoms";
-import { useDataStudent } from "../hooks/useDataStudent";
-import { useRestoreImage } from "../hooks/useRestoreImage";
-import { useStep } from "../hooks/useStepForm";
-import { VideoScanner } from "./VideoScanner";
+import { Buttoms } from "./Buttoms"
+import { useDataStudent } from "../hooks/useDataStudent"
+import { useRestoreImage } from "../hooks/useRestoreImage"
+import { useStep } from "../hooks/useStepForm"
+import { useState, useEffect } from "react"
 
 export function ImageDropzone({ frontOrBack }) {
   const { handleDragOver, handleDrop, calculateYears } = useDrop({frontOrBack});
@@ -15,6 +15,13 @@ export function ImageDropzone({ frontOrBack }) {
   const file = frontOrBack === 'front' ?  dataStudent.frontImageFile : dataStudent.backImageFile
   const { imageSrc } = useRestoreImage(file)
   const { setStep } = useStep()
+  const [ isMobile, setIsMobile ] = useState(false)
+
+  useEffect(() => {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera
+      const mobile = /android|iphone|ipad|ipod|iemobile|opera mini/i.test(userAgent)
+      setIsMobile(mobile)
+  }, [])
 
   let prevForm = frontOrBack === 'front' ? 'selectMode' : 'DropzoneFront'
   let title = frontOrBack === 'front' ? 'Ingrese la imagen frontal del DNI' : 'Ingrese la parte posterior del DNI'
@@ -54,10 +61,10 @@ export function ImageDropzone({ frontOrBack }) {
           />
         }
         <h4 className="text-sky-200 text-lg font-bold z-10" >Arrastra la imagen aquí o </h4>
-        <PDF417Decoder frontOrBack={frontOrBack} />
+        <PDF417Decoder frontOrBack={frontOrBack} mode='drag' />
         {
-          frontOrBack === 'front' &&
-          <VideoScanner frontOrBack={frontOrBack} />
+          isMobile &&
+          <PDF417Decoder frontOrBack={frontOrBack} mode='mobile' />
         }
         {
           error &&
