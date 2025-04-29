@@ -4,7 +4,7 @@ import { useError } from '../hooks/useError'
 import { useDataStudent } from '../hooks/useDataStudent'
 import './TestFile.css'
 
-export function PDF417Decoder({frontOrBack, mode}) {
+export function PDF417Decoder({frontOrBack}) {
     const [ imgUrl, setImgUrl ] = useState('')
     const [ setDataDni ] = useState(null)
     const { decodePDF417 } = usePDF417Decoder()
@@ -50,33 +50,18 @@ export function PDF417Decoder({frontOrBack, mode}) {
 
     return (
         <form className='z-10'>
-          {
-            mode == 'drag' ?
-            <input
-              type="file"
-              id="file"
-              onChange={handleFiles}
-              className='hidden'
-            /> :
-            <input
-              type="file"
-              id='file'
-              onChange={handleFiles}
-              accept="image/*"
-              capture="environment"
-              className='hidden'
-            />
-          }
-            <label 
-                htmlFor='file'
-                className='bg-sky-400 p-4 rounded-lg decoration-cyan-800 text-sky-100 text-lg font-bold hover:bg-sky-200 text-sky-300 cursor-pointer active:bg-sky-700 text-sky-200'
-            >
-              {
-                mode == 'drag' ?
-                'Arrastra la imagen aquí' :
-                'Abrir la cámara'
-              }
-            </label>
+          <input
+            type="file"
+            id="file"
+            onChange={handleFiles}
+            className='hidden'
+          /> 
+          <label 
+              htmlFor='file'
+              className='bg-sky-400 p-4 rounded-lg decoration-cyan-800 text-sky-100 text-lg font-bold hover:bg-sky-200 text-sky-300 cursor-pointer active:bg-sky-700 text-sky-200'
+          >
+              Cargue la imagen
+          </label>
         </form>
     )
 }
