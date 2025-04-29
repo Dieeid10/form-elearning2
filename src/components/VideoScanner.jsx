@@ -74,7 +74,7 @@ export const VideoScanner = ({frontOrBack}) => {
             {
                 isMobile ? (
                     <div>
-                        <input ref={videoRef} type="file" accept="video/*" capture="user" />
+                        <input ref={videoRef} type="file" accept="image/*" capture="environment" />
                     </div>
                 ) : (
                     <div>
