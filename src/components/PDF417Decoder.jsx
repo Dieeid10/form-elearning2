@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePDF417Decoder } from '../hooks/usePDF417Decoder'
 import { useError } from '../hooks/useError'
 import { useDataStudent } from '../hooks/useDataStudent'

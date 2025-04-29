@@ -35,6 +35,8 @@ export function usePDF417Decoder() {
 
       const rotatedImg = new Image()
       rotatedImg.src = canvas.toDataURL()
+      const imageBackround = document.getElementById('imageBackground')
+      imageBackround.src = rotatedImg.src
       return rotatedImg
     }
     
