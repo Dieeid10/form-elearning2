@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     position: absolute;
-    background-image: url('img/frente.webp');
+    background-image: url('/img/frente.webp');
     background-repeat: no-repeat;
     background-position: center;
     z-index: -1;
@@ -20,7 +20,7 @@
     top: 0;
     left: 0;
     position: absolute;
-    background-image: url('img/dorso.webp');
+    background-image: url('/img/dorso.webp');
     background-repeat: no-repeat;
     background-position: center;
     z-index: -1;

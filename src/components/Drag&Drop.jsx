@@ -50,7 +50,7 @@ export function ImageDropzone({ frontOrBack }) {
           imageSrc && 
           <img
             id='imageBackground'
-            src={imageSrc}
+            src={imageSrc ? imageSrc : frontOrBack === 'front' ? 'img/frente.png' : 'img/dorso.png'}
             alt={ frontOrBack === 'front' ? 'imagen del frente del DNI' : 'imagen del dorso del DNI' } 
             className="absolute z-0 w-3/4 rounded-xl opacity-40"
           />
