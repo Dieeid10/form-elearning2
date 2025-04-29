@@ -6,6 +6,7 @@ import { Buttoms } from "./Buttoms";
 import { useDataStudent } from "../hooks/useDataStudent";
 import { useRestoreImage } from "../hooks/useRestoreImage";
 import { useStep } from "../hooks/useStepForm";
+import { VideoScanner } from "./VideoScanner";
 
 export function ImageDropzone({ frontOrBack }) {
   const { handleDragOver, handleDrop, calculateYears } = useDrop({frontOrBack});
@@ -54,6 +55,10 @@ export function ImageDropzone({ frontOrBack }) {
         }
         <h4 className="text-sky-200 text-lg font-bold z-10" >Arrastra la imagen aquí o </h4>
         <PDF417Decoder frontOrBack={frontOrBack} />
+        {
+          frontOrBack === 'front' &&
+          <VideoScanner frontOrBack={frontOrBack} />
+        }
         {
           error &&
           <div 

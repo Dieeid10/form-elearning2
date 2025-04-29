@@ -26,6 +26,6 @@ export function FormMail () {
     }
 
     return (
-        <Form data = {data} validateData = {validateMail} title = {title} error={error} nextForm={nextForm} prevForm={prevForm} />
+        <Form data={data} validateData={validateMail} title={title} error={error} nextForm={nextForm} prevForm={prevForm} />
     )
 }
