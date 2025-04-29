@@ -74,25 +74,25 @@ export const VideoScanner = ({frontOrBack}) => {
             {
                 isMobile ? (
                     <div>
-                    <input type="file" accept="video/*" capture="user" />
+                        <input ref={videoRef} type="file" accept="video/*" capture="user" />
                     </div>
                 ) : (
                     <div>
-                    <button onClick={startDesktopCamera}>
-                        {cameraActive ? 'Desactivar' : 'Activar'} cámara
-                    </button>
-                    <div style={{ marginTop: '10px' }}>
-                        <video
-                        ref={videoRef}
-                        autoPlay
-                        playsInline
-                        style={{
-                            display: cameraActive ? 'block' : 'none',
-                            width: '100%',
-                            maxWidth: '500px'
-                        }}
-                        />
-                    </div>
+                        <div style={{ marginTop: '10px' }}>
+                            <video
+                            ref={videoRef}
+                            autoPlay
+                            playsInline
+                            style={{
+                                display: cameraActive ? 'block' : 'none',
+                                width: '100%',
+                                maxWidth: '500px'
+                            }}
+                            />
+                        </div>
+                        <button onClick={startDesktopCamera}>
+                            {cameraActive ? 'Desactivar' : 'Activar'} cámara
+                        </button>
                     </div>
                 )
             }
