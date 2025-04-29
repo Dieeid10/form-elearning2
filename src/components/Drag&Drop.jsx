@@ -63,10 +63,6 @@ export function ImageDropzone({ frontOrBack }) {
         <h4 className="text-sky-200 text-lg font-bold z-10" >Arrastra la imagen aquí o </h4>
         <PDF417Decoder frontOrBack={frontOrBack} mode='drag' />
         {
-          isMobile &&
-          <PDF417Decoder frontOrBack={frontOrBack} mode='mobile' />
-        }
-        {
           error &&
           <div 
             className="absolute top-5 bg-slate-100 font-semibold text-slate-600 opacity-50 h-1/3 w-1/2 flex justify-center items-center rounded-lg p-10 hover:opacity-100"
