@@ -1,14 +1,16 @@
 import { useDrop } from "../hooks/useDrop"
 import { PDF417Decoder } from "./PDF417Decoder"
 import { useError } from '../hooks/useError'
-import './imgBackround.css'
 import { Buttoms } from "./Buttoms"
 import { useDataStudent } from "../hooks/useDataStudent"
 import { useRestoreImage } from "../hooks/useRestoreImage"
 import { useStep } from "../hooks/useStepForm"
+import { usePDF417Decoder } from '../hooks/usePDF417Decoder'
+import './imgBackround.css'
 
 export function ImageDropzone({ frontOrBack }) {
-  const { handleDragOver, handleDrop, calculateYears } = useDrop({frontOrBack});
+  const { handleDragOver, handleDrop, calculateYears } = useDrop({frontOrBack})
+  const { decodePDF417, loading } = usePDF417Decoder()
   const { error } = useError()
   const { dataStudent } = useDataStudent()
   const file = frontOrBack === 'front' ?  dataStudent.frontImageFile : dataStudent.backImageFile
@@ -54,13 +56,19 @@ export function ImageDropzone({ frontOrBack }) {
           />
         }
         <h4 className="text-sky-200 text-lg font-bold z-10" >Arrastra la imagen aquí o </h4>
-        <PDF417Decoder frontOrBack={frontOrBack} />
+        <PDF417Decoder frontOrBack={frontOrBack} decodePDF417={decodePDF417} />
         {
           error &&
           <div 
             className="absolute top-5 bg-slate-100 font-semibold text-slate-600 opacity-50 h-1/3 w-1/2 flex justify-center items-center rounded-lg p-10 hover:opacity-100"
           > 
             <h2>{error}</h2>
+          </div>
+        }
+        {
+          loading &&
+          <div className="absolute top-5 bg-slate-100 font-semibold text-slate-600 opacity-50 h-1/3 w-1/2 flex justify-center items-center rounded-lg p-10 hover:opacity-100">
+            <h2>Decodificando la imagen...</h2>
           </div>
         }
       </div>

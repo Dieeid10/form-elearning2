@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
-import { usePDF417Decoder } from '../hooks/usePDF417Decoder'
+import { useEffect, useState } from 'react'
 import { useError } from '../hooks/useError'
 import { useDataStudent } from '../hooks/useDataStudent'
 import './TestFile.css'
 
-export function PDF417Decoder({frontOrBack}) {
+export function PDF417Decoder({frontOrBack, decodePDF417}) {
     const [ imgUrl, setImgUrl ] = useState('')
     const [ setDataDni ] = useState(null)
-    const { decodePDF417 } = usePDF417Decoder()
     const { error, changeError } = useError()
     const { updateData } = useDataStudent()
 
@@ -36,6 +34,8 @@ export function PDF417Decoder({frontOrBack}) {
             canvas.height = img.height
             canvasContext.drawImage(img, 0, 0, img.width, img.height)
       
+            const imageBackround = document.getElementById('imageBackground')
+            imageBackround.src = imgUrl
             try {
               await decodePDF417(canvasContext, img, frontOrBack)
             } catch (err) {

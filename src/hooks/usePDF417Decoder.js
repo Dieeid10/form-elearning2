@@ -5,12 +5,15 @@ import { BrowserMultiFormatReader } from '@zxing/library'
 
 export function usePDF417Decoder() {
   const [ decodedContent, setDecodedContent ] = useState(null)
+  const [ loading, setLoading ] = useState(false)
   const { changeError } = useError()
   const { updateData } = useDataStudent()
 
   const decodePDF417 = async (ctx, img, frontOrBack) => {
     if(frontOrBack === 'back') return
 
+    setLoading(true)
+    changeError(null)
     let attempsRotate = 0
     let newDataDni = null
 
@@ -55,6 +58,7 @@ export function usePDF417Decoder() {
           return decoderImage(rotatedImg)
         } else {
           changeError('Error al decodificar el código PDF417. Por favor, asegúrate de que la imagen contenga un código PDF417 válido.')
+          setLoading(false)
           return
         }
       }
@@ -64,6 +68,7 @@ export function usePDF417Decoder() {
       const resultJson = await decoderImage(img)
       if(!resultJson) {
         changeError('No se pudo decodificar la imagen, compruebe que posea código de DNI argentino y que este enfocado.')
+        setLoading(false)
         return
       }
       const dataDni = resultJson['text'].split('@')
@@ -82,6 +87,7 @@ export function usePDF417Decoder() {
       updateData(newDataDni)
       setDecodedContent(newDataDni)
       console.log(newDataDni)
+      setLoading(false)
       changeError(null)
     } catch (error) {
       console.error('Error al decodificar el código PDF417:', error)
@@ -89,5 +95,5 @@ export function usePDF417Decoder() {
     }
   }
 
-  return { decodedContent, decodePDF417 }
+  return { decodedContent, decodePDF417, loading }
 }
