@@ -39,7 +39,7 @@ export function Country() {
       className="w-2/3 relative"
       key={fieldset}
     >
-      <label htmlFor="country" className='block mb-2 text-sm font-medium text-gray-300'>Seleccione su país de la siguente lista: </label>
+      <label htmlFor="country" className='block mb-2 text-sm font-medium text-gray-300'>Seleccione el país donde fue emitido su documento: </label>
       <input 
         onClick={visibilityOptions} 
         name='country'

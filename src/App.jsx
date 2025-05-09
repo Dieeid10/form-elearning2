@@ -13,11 +13,14 @@ import { ConfirmData } from './components/ConfirmData'
 import { FormDataStudent } from './components/formDataStudent'
 import { useDataStudent } from './hooks/useDataStudent'
 import { AuthorizationForm } from './components/AuthorizationForm'
+import { ImageDropzoneParent } from './components/Drag&DropParent'
 
 const steps = {
   formMail: <FormMail className='' />,
   DropzoneFront: <ImageDropzone frontOrBack='front' />,
   DropzoneBack: <ImageDropzone frontOrBack='back' />,
+  DropzoneFrontParent: <ImageDropzoneParent frontOrBack='front' parent='true' />,
+  DropzoneBackParent: <ImageDropzoneParent frontOrBack='back' parent='true' />,
   selectMode: <SelectChargingMode />,
   FormData: <FormData />,
   FormDataAdulto: <FormDataAdulto />,

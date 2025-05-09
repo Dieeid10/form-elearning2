@@ -9,6 +9,16 @@ export function Address ({ dataStudent, Input }) {
         dataStudent.country === 'AR' &&
         <SelectProvinces />
       }
+      {
+        dataStudent.country === 'AR' &&
+        <Input
+          key='localityStudentForm'
+          name='locality'
+          id='locality'
+          label='Ingrese su localidad: '
+          type='text'
+        />
+      }
       <Input
         key='addressStudentForm'
         name='address'

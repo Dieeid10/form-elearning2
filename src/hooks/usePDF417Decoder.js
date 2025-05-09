@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useDataStudent } from './useDataStudent'
 import { useError } from './useError'
 import { BrowserMultiFormatReader } from '@zxing/library'
+import { useStep } from "../hooks/useStepForm"
 
 export function usePDF417Decoder() {
+  const { setStep } = useStep()
   const [ decodedContent, setDecodedContent ] = useState(null)
   const [ loading, setLoading ] = useState(false)
   const { changeError } = useError()
   const { updateData } = useDataStudent()
+  const intents = useRef(0)
 
-  const decodePDF417 = async (ctx, img, frontOrBack) => {
+  const decodePDF417 = async (ctx, img, frontOrBack, parent=false) => {
     if(frontOrBack === 'back') return
 
     setLoading(true)
@@ -38,7 +41,9 @@ export function usePDF417Decoder() {
 
       const rotatedImg = new Image()
       rotatedImg.src = canvas.toDataURL()
-      const imageBackround = document.getElementById('imageBackground')
+      const imagePath = parent ? 'imageBackgroundParent' : 'imageBackground'
+      const imageBackround = document.getElementById(imagePath)
+      console.log('El src que rota es: ', rotateImage.src)
       imageBackround.src = rotatedImg.src
       return rotatedImg
     }
@@ -48,6 +53,7 @@ export function usePDF417Decoder() {
     // Si no se puede decodificar después de 3 intentos, muestra un error
     async function decoderImage(img) {
       try {
+        console.log('La imagen que llega es: ', img)
         const codeReader = new BrowserMultiFormatReader()
         const resultJson = await codeReader.decodeFromImage(img)
         return resultJson
@@ -67,22 +73,43 @@ export function usePDF417Decoder() {
     try {
       const resultJson = await decoderImage(img)
       if(!resultJson) {
-        changeError('No se pudo decodificar la imagen, compruebe que posea código de DNI argentino y que este enfocado.')
+        if(intents.current < 3) {
+          console.log('Intento de decodificacion: ', intents.current)
+          intents.current++
+          changeError('No se pudo decodificar la imagen, compruebe que posea código de DNI argentino y que este enfocado.')
+        } else {
+          changeError('No se pudo realizar el escaneo del DNI, por favor ingrese sus datos manualmente.')
+          setStep('FormDataStudent')
+        }
         setLoading(false)
         return
       }
       const dataDni = resultJson['text'].split('@')
       console.log(dataDni)
-      newDataDni = {
-          nTramite: dataDni[0] ?? 'n/d',
-          lastName: dataDni[1] ?? 'n/d',
-          name: dataDni[2] ?? 'n/d',
-          sex: dataDni[3] ?? 'n/d',
-          documentNumber: dataDni[4] ?? 'n/d',
-          ejemplar: dataDni[5] ?? 'n/d',
-          dateOdBirth: dataDni[6] ?? 'n/d',
-          dateOfIssue: dataDni[7] ?? 'n/d',
-          documentType: 'DNI'
+      if(parent) {
+        newDataDni = {
+          nTramiteAdult: dataDni[0] ?? 'n/d',
+          lastNameAdult: dataDni[1] ?? 'n/d',
+          nameAdult: dataDni[2] ?? 'n/d',
+          sexAdult: dataDni[3] ?? 'n/d',
+          documentNumberAdult: dataDni[4] ?? 'n/d',
+          ejemplarAdult: dataDni[5] ?? 'n/d',
+          dateOdBirthAdult: dataDni[6] ?? 'n/d',
+          dateOfIssueAdult: dataDni[7] ?? 'n/d',
+          documentTypeAdult: 'DNI'
+        }
+      } else {
+        newDataDni = {
+            nTramite: dataDni[0] ?? 'n/d',
+            lastName: dataDni[1] ?? 'n/d',
+            name: dataDni[2] ?? 'n/d',
+            sex: dataDni[3] ?? 'n/d',
+            documentNumber: dataDni[4] ?? 'n/d',
+            ejemplar: dataDni[5] ?? 'n/d',
+            dateOdBirth: dataDni[6] ?? 'n/d',
+            dateOfIssue: dataDni[7] ?? 'n/d',
+            documentType: 'DNI'
+        }
       }
       updateData(newDataDni)
       setDecodedContent(newDataDni)

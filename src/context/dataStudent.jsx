@@ -21,7 +21,7 @@ export function DataStudent ({ children }) {
 }
 
 export function StepForm ({ children }) {
-    const [ step, setStep ] = useState('selectMode')
+    const [ step, setStep ] = useState('DropzoneFront')
 
     return (
         <StepContext.Provider value={{

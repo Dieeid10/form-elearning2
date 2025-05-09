@@ -9,6 +9,7 @@ export function useDrop({frontOrBack}) {
   const [ file, setFile ] = useState(null)
   const { error, changeError } = useError()
   const { dataStudent, updateData } = useDataStudent()
+  const [parent, setParent] = useState(false)
 
   const calculateYears = () => {
       const fechaStr = dataStudent.dateOdBirth
@@ -35,21 +36,28 @@ export function useDrop({frontOrBack}) {
     e.preventDefault();
   };
     
-  const handleDrop = async (e) => {
-    e.preventDefault()
-    const newFile = e.dataTransfer.files[0]
-    if( !newFile.type.match('image.*')) {
+  const handleDrop = async (newFile, parent=false) => {
+    console.log('El nuevo archivo es: ', newFile)
+    if( !newFile?.type?.match('image.*')) {
       changeError('El archivo no es una imagen válida, debe ser un archivo de tipo imagen como un jpg o png.')
       return
     }
+    setParent(parent)
     setFile(newFile)
-    const newImage = {
-      [`${frontOrBack}ImageFile`]: newFile,
-      [`${frontOrBack}ImageName`]: newFile.name
+    let newImage = null
+    if(!parent) {
+      newImage = {
+        [`${frontOrBack}ImageFile`]: newFile,
+        [`${frontOrBack}ImageName`]: newFile.name
+      }
+    } else {
+      newImage = {
+        [`${frontOrBack}ImageFileParent`]: newFile,
+        [`${frontOrBack}ImageNameParent`]: newFile.name,
+      }
     }
-    await !error && updateData(newImage)
-
-
+    
+    await updateData(newImage)
   }
 
   useEffect(() => {
@@ -65,7 +73,7 @@ export function useDrop({frontOrBack}) {
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       if (frontOrBack == 'front') {
-        await decodePDF417(ctx, img, frontOrBack)
+        await decodePDF417(ctx, img, frontOrBack, parent)
       }  
     };
   
