@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useStep } from "../hooks/useStepForm"
 import { Form } from "./Form"
 import { useDataStudent } from "../hooks/useDataStudent"
 
@@ -13,7 +14,11 @@ const nextForm = "FormData"
 
 export function FormMail () {
     const [ error, setError ] = useState()
+    const { setStep } = useStep()
     const { dataStudent } = useDataStudent()
+    const title = dataStudent.younger == 'true' ? "Ingrese los datos del alumno menor de edad: " : "Complete con los datos del alumno que realizará la cursada:"
+    const next = dataStudent.younger ? "DropzoneFrontParent" : "DropzoneFrontParent"
+    setStep(next)
 
     const prevForm = dataStudent.nTramite ? null : "FormDataStudent"
 

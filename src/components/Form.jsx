@@ -7,8 +7,10 @@ import { Error } from "./Error"
 import { DocumentForm } from "./DocumentFormComponent"
 import { Address } from "./Address"
 import { useIsYounger } from "../hooks/useIsYounger"
+import { AuthorizationCheckTextArea } from "./AuthorizationCheckTextArea"
+import { CuitInput } from "./CuitInput"
 
-export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, prevForm = null, address = false, AuthorizationText = false }) => {
+export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, prevForm = null, address = false, AuthorizationText = false, AuthorizationCheck = false, checked=false, toggleCheckbox=false, cuitInput=false }) => {
   const { error, changeError } = useError()
   const { updateData, dataStudent } = useDataStudent()
   const { setStep } = useStep()
@@ -74,8 +76,20 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
                 max={data[key].max || false}
                 min={data[key].min || false}
                 pattern={data[key].pattern || false}
+                readOnly={data[key].readOnly || false}
               />
             ))
+          }
+
+          {
+            !!documentForm &&
+            address &&
+            <DocumentForm documentForm={documentForm} Input={Input} />
+          }
+
+          {
+            !!AuthorizationCheck &&
+            <AuthorizationCheckTextArea checked={checked} toggleCheckbox={toggleCheckbox} />
           }
 
           {
@@ -92,6 +106,11 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
           {
             !!address &&
             <Address dataStudent={dataStudent} Input={Input} />
+          }
+
+          {
+            !!cuitInput &&
+            <CuitInput />
           }
 
           {

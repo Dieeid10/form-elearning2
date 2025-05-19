@@ -19,7 +19,7 @@ export function ImageDropzoneParent({ frontOrBack, parent = true }) {
 
   let prevForm = frontOrBack === 'front' ? null : 'DropzoneFrontParent'
   let title = frontOrBack === 'front' ? `Ingrese la imagen frontal del documento del ${!parent ? 'alumno': 'padre, madre o tutor.'}` : `Ingrese la parte posterior del documento del ${!parent ? 'alumno': 'padre, madre o tutor.'}`
-  let nextButton = frontOrBack === 'front' ? (dataStudent.documentNumberAdult ? true : false) : (dataStudent.backImageFileAdult ? true : false)
+  let nextButton = frontOrBack === 'front' ? (dataStudent.documentNumberAdult ? true : false) : (dataStudent.backImageFileParent ? true : false)
   
   const handleSubmitForm = async (event) => {
     event.preventDefault()
@@ -27,8 +27,7 @@ export function ImageDropzoneParent({ frontOrBack, parent = true }) {
       setStep('DropzoneBackParent')
     }
     if (!!dataStudent.frontImageFile && frontOrBack === 'back') {
-      await calculateYears()
-      setStep('FormData')
+      setStep('FormDataAdulto')
     }
   }
 

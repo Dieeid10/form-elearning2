@@ -29,7 +29,7 @@ export function ImageDropzone({ frontOrBack, parent = false }) {
     }
     if (!!dataStudent.frontImageFile && frontOrBack === 'back') {
       await calculateYears()
-      setStep('FormData')
+      setStep('FormDataStudent')
     }
   }
 

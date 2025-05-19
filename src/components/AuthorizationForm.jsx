@@ -4,7 +4,7 @@ import { useDataStudent } from "../hooks/useDataStudent"
 
 const title = "Entrega de autorización de participación:"
 
-const nextForm = "ConfirmData"
+const nextForm = "FormData"
 
 const prevForm = "FormDataAdulto"
 

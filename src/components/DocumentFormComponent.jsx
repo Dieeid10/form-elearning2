@@ -12,6 +12,8 @@ export function DocumentForm ({ documentForm, Input }) {
       <select 
         className='border text-sm rounded-lg block w-full p-2.5 bg-sky-200 broder-gray-600 placeholder-gray-400 text-sky-500 rounded-full'
         name={documentForm.nameType}
+        value={documentForm?.value || ''}
+        readOnly={documentForm?.readOnly || false}
       >
         {
           documentForm.typeToDocument.map(type => (
@@ -28,6 +30,8 @@ export function DocumentForm ({ documentForm, Input }) {
       id={documentForm.numberToDocument.id}
       label={documentForm.numberToDocument.label}
       type={documentForm.numberToDocument.type}
+      value={documentForm.numberToDocument.value}
+      readOnly={documentForm.numberToDocument.readOnly || false}
     />
   </>
   )

@@ -14,6 +14,8 @@ import { FormDataStudent } from './components/formDataStudent'
 import { useDataStudent } from './hooks/useDataStudent'
 import { AuthorizationForm } from './components/AuthorizationForm'
 import { ImageDropzoneParent } from './components/Drag&DropParent'
+import { AuthorizationChech } from './components/Authoritation'
+import { useSearchParams } from 'react-dom'
 
 const steps = {
   formMail: <FormMail className='' />,
@@ -26,7 +28,8 @@ const steps = {
   FormDataAdulto: <FormDataAdulto />,
   ConfirmData: <ConfirmData />,
   FormDataStudent: <FormDataStudent />,
-  AuthorizationForm: <AuthorizationForm />
+  AuthorizationForm: <AuthorizationForm />,
+  AuthorizationChech: <AuthorizationChech />,
 }
 
 function App() {

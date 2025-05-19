@@ -20,6 +20,16 @@ export function usePDF417Decoder() {
     let attempsRotate = 0
     let newDataDni = null
 
+    function convertToISOFormat(dateString) {
+      if (!dateString) return '';
+      
+      // Partimos la fecha en día, mes y año
+      const [day, month, year] = dateString.split('/');
+      
+      // Formateamos a YYYY-MM-DD
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  }
+
     // Funcion para rotar la imagen
     function rotateImage(originalImg, degrees) {
       const canvas = document.createElement('canvas')
@@ -79,13 +89,14 @@ export function usePDF417Decoder() {
           changeError('No se pudo decodificar la imagen, compruebe que posea código de DNI argentino y que este enfocado.')
         } else {
           changeError('No se pudo realizar el escaneo del DNI, por favor ingrese sus datos manualmente.')
-          setStep('FormDataStudent')
+          parent ? setStep('FormDataAdulto') : setStep('FormDataStudent')
         }
         setLoading(false)
         return
       }
       const dataDni = resultJson['text'].split('@')
       console.log(dataDni)
+      const dateFormat = convertToISOFormat(dataDni[6])
       if(parent) {
         newDataDni = {
           nTramiteAdult: dataDni[0] ?? 'n/d',
@@ -94,7 +105,7 @@ export function usePDF417Decoder() {
           sexAdult: dataDni[3] ?? 'n/d',
           documentNumberAdult: dataDni[4] ?? 'n/d',
           ejemplarAdult: dataDni[5] ?? 'n/d',
-          dateOdBirthAdult: dataDni[6] ?? 'n/d',
+          dateOdBirthAdult: dateFormat ?? 'n/d',
           dateOfIssueAdult: dataDni[7] ?? 'n/d',
           documentTypeAdult: 'DNI'
         }
@@ -106,7 +117,7 @@ export function usePDF417Decoder() {
             sex: dataDni[3] ?? 'n/d',
             documentNumber: dataDni[4] ?? 'n/d',
             ejemplar: dataDni[5] ?? 'n/d',
-            dateOdBirth: dataDni[6] ?? 'n/d',
+            dateOdBirth: dateFormat ?? 'n/d',
             dateOfIssue: dataDni[7] ?? 'n/d',
             documentType: 'DNI'
         }
