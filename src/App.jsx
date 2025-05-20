@@ -15,7 +15,7 @@ import { useDataStudent } from './hooks/useDataStudent'
 import { AuthorizationForm } from './components/AuthorizationForm'
 import { ImageDropzoneParent } from './components/Drag&DropParent'
 import { AuthorizationChech } from './components/Authoritation'
-import { useSearchParams } from 'react-dom'
+import { useSearchParams } from 'react-router-dom'
 
 const steps = {
   formMail: <FormMail className='' />,
@@ -35,6 +35,9 @@ const steps = {
 function App() {
   const { dataStudent } = useDataStudent()
   const { step } = useStep()
+  const [searchParams] = useSearchParams()
+  const isParent = searchParams.get('parent')
+  console.log('isParent', isParent)
 
   return (
     <>

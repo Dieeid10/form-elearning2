@@ -1,4 +1,2 @@
 Si tiene documento argentino no preguntar pais
-Agregar carga dni del adulto responsable
-Agregar facturación
 Que datos tenemos: mail,
