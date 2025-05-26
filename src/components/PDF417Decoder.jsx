@@ -1,25 +1,44 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useError } from '../hooks/useError'
 import { useDataStudent } from '../hooks/useDataStudent'
+import { useMrzDecoder } from '../hooks/useMrzDecoder'
 import './TestFile.css'
 
-export function PDF417Decoder({frontOrBack, decodePDF417, parent = false}) {
-    const [ imgUrl, setImgUrl ] = useState('')
-    const [ setDataDni ] = useState(null)
+export function PDF417Decoder({frontOrBack, decodePDF417, updateCharge, parent = false}) {
+    const { lectorDocumentMrz } = useMrzDecoder()
     const { error, changeError } = useError()
     const { updateData } = useDataStudent()
 
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
     const handleFiles = async (f) => {
-        const file = f.target.files[0]
-        console.log('El archivo es: ', file)
-        if( file.size === 0 || !file.type.match('image.*')) {
-          changeError('El archivo no es una imagen válida, debe ser un archivo de tipo imagen como un jpg o png.')
-          return
+      await updateCharge('10')
+      await wait(100)
+      const file = f.target.files[0]
+      const newDataMrz = await lectorDocumentMrz(file, parent)
+      const newUrlImg = URL.createObjectURL(file)
+      await updateCharge('30')
+      await wait(100)
+  
+      const img = new Image()
+      img.onload = async () => {
+        const canvas = document.createElement('canvas')
+        const canvasContext = canvas.getContext('2d')
+        canvas.width = img.width
+        canvas.height = img.height
+        canvasContext.drawImage(img, 0, 0, img.width, img.height)
+  
+        const imageBackround = document.getElementById('imageBackground')
+        if (imageBackround) {
+          imageBackround.src = newUrlImg
         }
-        const newUrlImg = URL.createObjectURL(file)
-        setImgUrl(newUrlImg)
+        await updateCharge('40')
+        await wait(100)
+        const newDataDni = await decodePDF417(canvasContext, img, frontOrBack, parent)
+        await updateCharge('70')
+        await wait(100)
         let newImage = null
-        if(!parent) {
+        if (!parent) {
           newImage = {
             [`${frontOrBack}ImageFile`]: file,
             [`${frontOrBack}ImageName`]: file.name
@@ -30,37 +49,15 @@ export function PDF417Decoder({frontOrBack, decodePDF417, parent = false}) {
             [`${frontOrBack}ImageNameParent`]: file.name,
           }
         }
-        !error && updateData(newImage)
+        await updateCharge('80')
+        await wait(100)
+        const newData = { ...newDataMrz, ...newImage, ...newDataDni }
+        if (!error) updateData(newData)
+        await updateCharge('100')
+        await wait(100)
+      }
+      img.src = newUrlImg
     }
-
-    useEffect(() => {
-        if (imgUrl && frontOrBack == 'front') {
-          const img = new Image()
-          img.onload = async () => {
-            const canvas = document.createElement('canvas')
-            const canvasContext = canvas.getContext('2d')
-            canvas.width = img.width
-            canvas.height = img.height
-            canvasContext.drawImage(img, 0, 0, img.width, img.height)
-      
-            const imageBackround = document.getElementById('imageBackground')
-            console.log('El imgUrl es: ', imgUrl)
-            imageBackround.src = imgUrl
-            try {
-              await decodePDF417(canvasContext, img, frontOrBack, parent)
-            } catch (err) {
-              setDataDni('')
-              changeError('No se pudo decodificar la imagen, compruebe que posea código de DNI argentino y que este enfocado.')
-              console.error(err)
-            }
-          }
-          img.src = imgUrl
-        }
-
-        return () => {
-          setImgUrl('');
-        }
-      }, [imgUrl])
 
     return (
         <form className='z-10'>

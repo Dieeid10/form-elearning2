@@ -122,11 +122,10 @@ export function usePDF417Decoder() {
             documentType: 'DNI'
         }
       }
-      updateData(newDataDni)
       setDecodedContent(newDataDni)
-      console.log(newDataDni)
       setLoading(false)
       changeError(null)
+      return newDataDni
     } catch (error) {
       console.error('Error al decodificar el código PDF417:', error)
       setDecodedContent(null)

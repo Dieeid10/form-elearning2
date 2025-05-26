@@ -30,14 +30,6 @@ export function FormDataAdulto () {
             key: 'lastNameFormAdult',
             value: dataStudent?.lastNameAdult || '',
             readOnly: !!dataStudent?.lastNameAdult
-        },
-        obj3: { 
-            name: 'mailAdult',
-            id: 'mailAdult',
-            label: 'Email:',
-            type: 'email',
-            placeholder: 'mimail@dominio.com',
-            key: 'mailFormAdult'
         }
     }
 

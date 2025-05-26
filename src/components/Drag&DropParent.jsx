@@ -9,7 +9,7 @@ import './imgBackround.css'
 import { PDF417DecoderParent } from "./PDF417DecoderParent"
 
 export function ImageDropzoneParent({ frontOrBack, parent = true }) {
-  const { handleDragOver, handleDrop, calculateYears } = useDrop({frontOrBack})
+  const { handleDragOver, handleDrop } = useDrop({frontOrBack})
   const { decodePDF417, loading } = usePDF417Decoder()
   const { error } = useError()
   const { dataStudent } = useDataStudent()
