@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
-import { useDataStudent } from "./useDataStudent";
-import { useError } from "./useError";
+import { useDataStudent } from "./useDataStudent"
+import { useError } from "./useError"
 import { usePDF417Decoder } from "./usePDF417Decoder"
-import { useStep } from "./useStepForm";
+import { useMrzDecoder } from '../hooks/useMrzDecoder'
 
 export function useDrop({frontOrBack}) {
-  const { decodedContent, decodePDF417 } = usePDF417Decoder();
-  const [ file, setFile ] = useState(null)
+  const { decodedContent, decodePDF417 } = usePDF417Decoder()
+  const { lectorDocumentMrz } = useMrzDecoder()
   const { error, changeError } = useError()
   const { dataStudent, updateData } = useDataStudent()
-  const [parent, setParent] = useState(false)
 
   const calculateYears = () => {
       const fechaStr = dataStudent.dateOdBirth
@@ -33,13 +31,72 @@ export function useDrop({frontOrBack}) {
   }
 
   const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
+
+  const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
+  const handleDrop = async (file, parent=false, updateCharge) => {
+    console.log('El nuevo archivo es: ', file)
+    changeError(null)
+    await updateCharge('10')
+    await wait(100)
     
-  const handleDrop = async (newFile, parent=false) => {
+    if (!file || !file.type.startsWith('image/')) {
+      changeError('Por favor, seleccione un archivo de imagen válido.')
+      return
+    }
+
+    const newDataMrz = await lectorDocumentMrz(file, parent)
+    const newUrlImg = URL.createObjectURL(file)
+    await updateCharge('30')
+    await wait(100)
+
+    const img = new Image()
+    img.onload = async () => {
+      const canvas = document.createElement('canvas')
+      const canvasContext = canvas.getContext('2d')
+      canvas.width = img.width
+      canvas.height = img.height
+      canvasContext.drawImage(img, 0, 0, img.width, img.height)
+
+      const imageBackround = document.getElementById('imageBackground')
+      if (imageBackround) {
+        imageBackround.src = newUrlImg
+      }
+      await updateCharge('40')
+      await wait(100)
+      const newDataDni = await decodePDF417(canvasContext, img, frontOrBack, parent)
+      await updateCharge('70')
+      await wait(100)
+      let newImage = null
+      if (!parent) {
+        newImage = {
+          [`${frontOrBack}ImageFile`]: file,
+          [`${frontOrBack}ImageName`]: file.name
+        }
+      } else {
+        newImage = {
+          [`${frontOrBack}ImageFileParent`]: file,
+          [`${frontOrBack}ImageNameParent`]: file.name,
+        }
+      }
+      await updateCharge('80')
+      await wait(100)
+      const newData = { ...newDataMrz, ...newImage, ...newDataDni }
+      if (!error) updateData(newData)
+      await updateCharge('100')
+      await wait(100)
+      await wait(null)
+    }
+    img.src = newUrlImg
+  }
+
+ /*  const handleDrop = async (newFile, parent=false) => {
     console.log('El nuevo archivo es: ', newFile)
+    changeError(null)
     if( !newFile?.type?.match('image.*')) {
-      changeError('El archivo no es una imagen válida, debe ser un archivo de tipo imagen como un jpg o png.')
+      changeError('El archivo no es una imagen válida, debe ser un archivo de tipo imagen como un jpg, jpeg o png.')
       return
     }
     setParent(parent)
@@ -58,27 +115,7 @@ export function useDrop({frontOrBack}) {
     }
     
     await updateData(newImage)
-  }
+  } */
 
-  useEffect(() => {
-
-    if (!file)  return
-    const img = new Image()
-    
-    img.src = URL.createObjectURL(file)
-    img.onload = async () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      if (frontOrBack == 'front') {
-        await decodePDF417(ctx, img, frontOrBack, parent)
-      }  
-    };
-  
-  }, [file])
-    
-
-  return { decodedContent, error, handleDragOver, handleDrop, calculateYears };
+  return { decodedContent, error, handleDragOver, handleDrop, calculateYears }
 }

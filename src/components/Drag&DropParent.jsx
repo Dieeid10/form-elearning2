@@ -5,12 +5,15 @@ import { useDataStudent } from "../hooks/useDataStudent"
 import { useRestoreImage } from "../hooks/useRestoreImage"
 import { useStep } from "../hooks/useStepForm"
 import { usePDF417Decoder } from '../hooks/usePDF417Decoder'
-import './imgBackround.css'
 import { PDF417DecoderParent } from "./PDF417DecoderParent"
+import { Charge } from "./Charge"
+import { useCharge } from "../hooks/useCharge"
+import './imgBackround.css'
 
 export function ImageDropzoneParent({ frontOrBack, parent = true }) {
   const { handleDragOver, handleDrop } = useDrop({frontOrBack})
   const { decodePDF417, loading } = usePDF417Decoder()
+  const { charge, updateCharge } = useCharge()
   const { error } = useError()
   const { dataStudent } = useDataStudent()
   const file = frontOrBack === 'front' ?  dataStudent.frontImageFileParent : dataStudent.backImageFileParent
@@ -59,7 +62,7 @@ export function ImageDropzoneParent({ frontOrBack, parent = true }) {
           />
         }
         <h4 className="text-sky-200 text-lg font-bold z-10" >Arrastra la imagen aquí o </h4>
-        <PDF417DecoderParent frontOrBack={frontOrBack} decodePDF417={decodePDF417} parent={parent} />
+        <PDF417DecoderParent frontOrBack={frontOrBack} decodePDF417={decodePDF417} parent={parent} updateCharge={updateCharge} />
         {
           error &&
           <div 
@@ -69,10 +72,8 @@ export function ImageDropzoneParent({ frontOrBack, parent = true }) {
           </div>
         }
         {
-          loading &&
-          <div className="absolute top-5 bg-slate-100 font-semibold text-slate-600 opacity-50 h-1/3 w-1/2 flex justify-center items-center rounded-lg p-10 hover:opacity-100">
-            <h2>Decodificando la imagen...</h2>
-          </div>
+          !!charge &&
+          <Charge charge={charge} />
         }
       </div>
       <form onSubmit={handleSubmitForm}>

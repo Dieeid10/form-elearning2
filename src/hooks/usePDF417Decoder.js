@@ -51,10 +51,6 @@ export function usePDF417Decoder() {
 
       const rotatedImg = new Image()
       rotatedImg.src = canvas.toDataURL()
-      const imagePath = parent ? 'imageBackgroundParent' : 'imageBackground'
-      const imageBackround = document.getElementById(imagePath)
-      console.log('El src que rota es: ', rotateImage.src)
-      imageBackround.src = rotatedImg.src
       return rotatedImg
     }
     
@@ -73,7 +69,6 @@ export function usePDF417Decoder() {
           const rotatedImg = rotateImage(img, 90)
           return decoderImage(rotatedImg)
         } else {
-          changeError('Error al decodificar el código PDF417. Por favor, asegúrate de que la imagen contenga un código PDF417 válido.')
           setLoading(false)
           return
         }

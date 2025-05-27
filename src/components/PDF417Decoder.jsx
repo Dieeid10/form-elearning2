@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useError } from '../hooks/useError'
 import { useDataStudent } from '../hooks/useDataStudent'
 import { useMrzDecoder } from '../hooks/useMrzDecoder'
@@ -12,9 +11,18 @@ export function PDF417Decoder({frontOrBack, decodePDF417, updateCharge, parent =
     const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
     const handleFiles = async (f) => {
+      await updateCharge('0')
+      await wait(100)
       await updateCharge('10')
       await wait(100)
+
       const file = f.target.files[0]
+
+      if (!file || !file.type.startsWith('image/')) {
+        changeError('Por favor, seleccione un archivo de imagen válido.')
+        return
+      }
+
       const newDataMrz = await lectorDocumentMrz(file, parent)
       const newUrlImg = URL.createObjectURL(file)
       await updateCharge('30')
@@ -54,6 +62,8 @@ export function PDF417Decoder({frontOrBack, decodePDF417, updateCharge, parent =
         const newData = { ...newDataMrz, ...newImage, ...newDataDni }
         if (!error) updateData(newData)
         await updateCharge('100')
+        await wait(100)
+        await updateCharge(null)
         await wait(100)
       }
       img.src = newUrlImg

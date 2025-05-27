@@ -17,7 +17,7 @@ export function ImageDropzone({ frontOrBack, parent = false }) {
   const { error } = useError()
   const { dataStudent } = useDataStudent()
   const file = frontOrBack === 'front' ?  dataStudent.frontImageFile : dataStudent.backImageFile
-  console.log('El archivo es: ', file)
+  console.log('El charge es: ', charge)
   const { imageSrc } = useRestoreImage(file)
   const { setStep } = useStep()
 
@@ -51,7 +51,7 @@ export function ImageDropzone({ frontOrBack, parent = false }) {
         onDrop={ (e) => {
           e.preventDefault()
           const newFile = e.dataTransfer.files[0]
-          handleDrop(newFile, parent)}}
+          handleDrop(newFile, parent, updateCharge)}}
         className= {`h-full w-full flex justify-center items-center flex-col sm:flex-row gap-2 rounded-xl relative overflow-hidden  ${ !imageSrc && (frontOrBack == 'front' ? 'imgBackroundFront' : 'imgBackroundBack') }`}
       >
         {

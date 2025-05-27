@@ -3,16 +3,28 @@ import { useDataStudent } from '../hooks/useDataStudent'
 import { useMrzDecoder } from '../hooks/useMrzDecoder'
 import './TestFile.css'
 
-export function PDF417DecoderParent({frontOrBack, decodePDF417, parent = false}) {
+export function PDF417DecoderParent({frontOrBack, decodePDF417, updateCharge, parent = false}) {
     const { lectorDocumentMrz } = useMrzDecoder()
     const { error, changeError } = useError()
     const { updateData } = useDataStudent()
 
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
     const handleFiles = async (f) => {
-      changeError('Decodificando documento, espere un momento...')
+      await updateCharge('10')
+      await wait(100)
+
       const file = f.target.files[0]
+
+      if (!file || !file.type.startsWith('image/')) {
+        changeError('Por favor, seleccione un archivo de imagen válido.')
+        return
+      }
+
       const newDataMrz = await lectorDocumentMrz(file, parent)
       const newUrlImg = URL.createObjectURL(file)
+      await updateCharge('30')
+      await wait(100)
   
       const img = new Image()
       img.onload = async () => {
@@ -26,8 +38,12 @@ export function PDF417DecoderParent({frontOrBack, decodePDF417, parent = false})
         if (imageBackround) {
           imageBackround.src = newUrlImg
         }
+        await updateCharge('40')
+        await wait(100)
   
         const newDataDni = await decodePDF417(canvasContext, img, frontOrBack, parent)
+        await updateCharge('70')
+        await wait(100)
 
         let newImage = null
         if (!parent) {
@@ -41,9 +57,15 @@ export function PDF417DecoderParent({frontOrBack, decodePDF417, parent = false})
             [`${frontOrBack}ImageNameParent`]: file.name,
           }
         }
+        await updateCharge('80')
+        await wait(100)
         const newData = { ...newDataMrz, ...newImage, ...newDataDni }
         changeError(null)
         if (!error) updateData(newData)
+        await updateCharge('100')
+        await wait(100)
+        await updateCharge(null)
+        await wait(100)
       }
       img.src = newUrlImg
     }
@@ -58,7 +80,7 @@ export function PDF417DecoderParent({frontOrBack, decodePDF417, parent = false})
           /> 
           <label 
               htmlFor='fileParent'
-              className='bg-sky-400 p-4 rounded-lg decoration-cyan-800 text-sky-100 text-lg font-bold hover:bg-sky-200 text-sky-300 cursor-pointer active:bg-sky-700 text-sky-200'
+              className='bg-sky-400 p-4 rounded-lg decoration-cyan-800 text-lg font-bold hover:bg-sky-200 text-sky-300 cursor-pointer active:bg-sky-700 text-sky-200'
           >
               Cargue la imagen
           </label>
