@@ -33,11 +33,14 @@ const steps = {
 }
 
 function App() {
-  const { dataStudent } = useDataStudent()
+  const { dataStudent, updateData } = useDataStudent()
   const { step } = useStep()
   const [searchParams] = useSearchParams()
-  const isParent = searchParams.get('parent')
-  console.log('isParent', isParent)
+  const tel = searchParams.get('tel')
+  if (tel) updateData({ 
+    'tel': tel
+  })
+  
 
   return (
     <>

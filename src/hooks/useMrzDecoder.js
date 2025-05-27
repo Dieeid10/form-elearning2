@@ -16,6 +16,14 @@ export function useMrzDecoder() {
             if (response.cuil) {
                 newData[parent ? 'cuilAdult' : 'cuil'] = response.cuil
             }
+
+            if (response.country) {
+                newData[parent ? 'countryAdult' : 'country'] = response.country
+            }
+
+            if (response.province) {
+                newData[parent ? 'provinceAdult' : 'province'] = response.province
+            }
         }
         return newData
     }
@@ -44,7 +52,7 @@ export function useMrzDecoder() {
                   dateOdBirthAdult: convertDateMrz(response.data_document['date_of_birth']) ?? 'n/d',
                   dateOfIssueAdult: convertDateMrz(response.data_document['expiration_date']) ?? 'n/d',
                   documentTypeAdult: (response.data_document['type'] === 'ID' && response.data_document['country'] === 'ARG') ? 'DNI' : response.data_document['type'],
-                  countryAdult: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase()).nombre
+                  countryAdult: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
                 }
             } else if(!dataStudent?.name && !dataStudent?.lastName) {
                     newDataDni = {
@@ -55,11 +63,11 @@ export function useMrzDecoder() {
                         dateOdBirth: convertDateMrz(response.data_document['date_of_birth']) ?? 'n/d',
                         dateOfIssue: convertDateMrz(response.data_document['expiration_date']) ?? 'n/d',
                         documentType: (response.data_document['type'] === 'ID' && response.data_document['country'] === 'ARG') ? 'DNI' : response.data_document['type'],
-                        country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase()).nombre
+                        country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
                     }
             } else {
                 newDataDni = {
-                    country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase()).nombre
+                    country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
                 }
             }
             

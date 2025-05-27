@@ -2,15 +2,16 @@ import { useState, useId } from 'react'
 import { useFilter } from "../hooks/useFilter.js";
 import { Search } from './Svg';
 import { useDataStudent } from '../hooks/useDataStudent';
-import countryJson from '../fichero/paises.json'
 import { SelectProvinces } from './SelectProvincy';
+import countryJson from '../fichero/paises.json'
 
 export function Country() {
   const { dataFilteded, updateFilter, filter } = useFilter({ data: countryJson })
-  const [ valueInput, setValueInput ] = useState("")
+  const { dataStudent, updateData } = useDataStudent()
+  const countryName = dataStudent.country ? countryJson.find(country => country['alfa-2'] === dataStudent.country).nombre : ''
+  const [ valueInput, setValueInput ] = useState(countryName)
   const [ isActive, setIsActive ] = useState(false)
-  const [ valueInputShort, setValueInputShort ] = useState('')
-  const { updateData } = useDataStudent()
+  const [ valueInputShort, setValueInputShort ] = useState(dataStudent.country || '')
   const fieldset = useId()
 
   const handleChange = (e) => {
@@ -41,11 +42,11 @@ export function Country() {
     >
       <label htmlFor="country" className='block mb-2 text-sm font-medium text-gray-300'>Seleccione el país donde fue emitido su documento: </label>
       <input 
-        onClick={visibilityOptions} 
+        onClick={visibilityOptions}
         name='country'
         id='country'
         type="text" 
-        value={valueInput} 
+        value={valueInput}
         className={`w-full inputToSelect p-2.5 outline-none bg-black text-sky-500 placeholder:text-sky-300 text-sm cursor-pointer ${ isActive ? "rounded-t-lg" : "rounded-lg" } `} 
         placeholder='País...'
         readOnly
@@ -71,7 +72,7 @@ export function Country() {
                 onClick={selectOption} 
                 value={country["alfa-2"]} 
                 key={country["alfa-3"]} 
-                className='w-full text-left text-sky-500' 
+                className='w-full text-left text-sky-500'
                 >
                   {country.nombre}
                 </button>

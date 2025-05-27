@@ -25,6 +25,7 @@ export function Address ({ dataStudent, Input }) {
         id='address'
         label='Ingrese su dirección: '
         type='text'
+        value={dataStudent.address || ''}
       />
       <Input
         key='provinceStudentFormData'
