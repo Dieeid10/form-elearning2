@@ -50,7 +50,8 @@ function App() {
       />
       {steps[step]}
       
-      { IS_DEVELOPMENT && <Footer dataStudent={dataStudent} /> }
+      {/* { IS_DEVELOPMENT && <Footer dataStudent={dataStudent} /> } */}
+      <Footer dataStudent={dataStudent} />
     </>
   )
 }
