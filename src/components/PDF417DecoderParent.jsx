@@ -59,6 +59,12 @@ export function PDF417DecoderParent({frontOrBack, decodePDF417, updateCharge, pa
         }
         await updateCharge('80')
         await wait(100)
+        if((!newDataDni?.documentNumber && !newDataDni?.documentNumberAdult) && (!newDataMrz?.country && !newDataMrz?.countryAdult)) {
+          await updateCharge(null)
+          await wait(100)
+          changeError('No se pudo decodificar el documento. Por favor, asegúrese de que la imagen sea clara y legible.')
+          return
+        }
         const newData = { ...newDataMrz, ...newImage, ...newDataDni }
         changeError(null)
         if (!error) updateData(newData)

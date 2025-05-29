@@ -81,9 +81,7 @@ export function usePDF417Decoder() {
         if(intents.current < 3) {
           console.log('Intento de decodificacion: ', intents.current)
           intents.current++
-          changeError('No se pudo decodificar la imagen, compruebe que posea código de DNI argentino y que este enfocado.')
         } else {
-          changeError('No se pudo realizar el escaneo del DNI, por favor ingrese sus datos manualmente.')
           parent ? setStep('FormDataAdulto') : setStep('FormDataStudent')
         }
         setLoading(false)
