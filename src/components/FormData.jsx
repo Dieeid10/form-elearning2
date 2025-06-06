@@ -1,11 +1,9 @@
 import { Form } from "./Form"
 import { useDataStudent } from "../hooks/useDataStudent"
-import { FormMail } from './FormMail'
 
 export function FormData () {
     const { dataStudent } = useDataStudent()
     const title = dataStudent.younger == 'true' ? "Ingrese los datos del alumno menor de edad: " : "Complete con los datos del alumno que realizará la cursada:"
-    /* const next = dataStudent.younger ? "DropzoneFrontParent" : "DropzoneFrontParent" */
 
     const data = {
         obj2: { name: 'tel', id: 'tel', label: 'Telefono:', type: 'tel', placeholder: '4886-7915', key: 'telStudentForm', pattern:'[0-9]+', value: dataStudent.tel || '' }

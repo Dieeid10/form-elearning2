@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import { useDataStudent } from './useDataStudent'
 import { useError } from './useError'
 import { BrowserMultiFormatReader } from '@zxing/library'
 import { useStep } from "../hooks/useStepForm"
@@ -9,7 +8,6 @@ export function usePDF417Decoder() {
   const [ decodedContent, setDecodedContent ] = useState(null)
   const [ loading, setLoading ] = useState(false)
   const { changeError } = useError()
-  const { updateData } = useDataStudent()
   const intents = useRef(0)
 
   const decodePDF417 = async (ctx, img, frontOrBack, parent=false) => {
@@ -64,7 +62,7 @@ export function usePDF417Decoder() {
         const resultJson = await codeReader.decodeFromImage(img)
         return resultJson
       } catch (error) {
-        if (attempsRotate < 4) {
+        if (attempsRotate < 3) {
           attempsRotate++
           const rotatedImg = rotateImage(img, 90)
           return decoderImage(rotatedImg)

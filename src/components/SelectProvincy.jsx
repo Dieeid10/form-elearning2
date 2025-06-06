@@ -60,17 +60,19 @@ export function SelectProvinces() {
         </div>
         <div className='overflow-auto w-full px-2 snap-none bg-black scrollBar rounded-b-lg'>
           {
-            Object.values(dataFilteded).map(province => (
-              <button 
-                type='button'
-                onClick={selectOption} 
-                value={province["iso_id"]} 
-                key={province["iso_id"]} 
-                className='w-full text-left text-sky-300' 
-                >
-                  {province.iso_nombre}
-                </button>
-            ))
+            Object.values(dataFilteded)
+              .sort((a, b) => a.nombre.localeCompare(b.nombre))
+              .map(province => (
+                <button 
+                  type='button'
+                  onClick={selectOption} 
+                  value={province["iso_id"]} 
+                  key={province["iso_id"]} 
+                  className='w-full text-left text-sky-300' 
+                  >
+                    {province.iso_nombre}
+                  </button>
+              ))
           }
         </div>
       </div>

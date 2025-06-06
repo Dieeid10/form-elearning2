@@ -39,7 +39,9 @@ export function AuthorizationText () {
       <a onClick={inputAuthorizationView} href='/Authorization.pdf' download='Authorization.pdf' className="button" >
         <span className="button_lg">
           <span className="button_sl"></span>
-          <span href='/Authorization.pdf' download='Authorization.pdf' className="button_text">Descargar autorización</span>
+          <a href="/Authorization.pdf" download="Authorization.pdf" className="button_text">
+            Descargar autorización
+          </a>
         </span>
       </a>
       {

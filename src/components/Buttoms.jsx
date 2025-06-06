@@ -1,15 +1,8 @@
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from '@tabler/icons-react'
-import { useDataStudent } from "../hooks/useDataStudent"
 import { useStep } from '../hooks/useStepForm'
 
 export function Buttoms ({ prevForm, nextButton = true }) {
   const { step, setStep } = useStep()
-  const { saveDate } = useDataStudent()
-
-  const handleSubmitForm = (event) => {
-    event.preventDefault()
-    saveDate()
-  }
 
   const handlePrev = (e) => {
     e.preventDefault()
@@ -31,7 +24,7 @@ export function Buttoms ({ prevForm, nextButton = true }) {
           </button>
           }
           {
-            step != 'ConfirmData' &&
+            step != 'FormData' &&
             nextButton &&
             <button 
               className="w-1/4 flex justify-center border text-sm rounded-lg block p-2.5 bg-white/5 broder-gray-600 text-white rounded-full self-end ease-out duration-75 hover:bg-white/20 hover:scale-110 active:bg-white/50"
@@ -41,11 +34,10 @@ export function Buttoms ({ prevForm, nextButton = true }) {
             </button>
           }
           {
-            step === 'ConfirmData' &&
+            step === 'FormData' &&
             <button 
               className="w-1/4 flex justify-center border text-sm rounded-lg block p-2.5 bg-white/5 broder-gray-600 text-white rounded-full self-end ease-out duration-75 hover:bg-white/20 hover:scale-110 active:bg-white/50"
               type='submit'
-              onClick={handleSubmitForm}
             >
               Enviar
             </button>

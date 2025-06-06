@@ -66,7 +66,9 @@ export function Country() {
         </div>
         <div className='overflow-auto w-full px-2 snap-none bg-black scrollBar rounded-b-l'>
           {
-            Object.values(dataFilteded).map(country => (
+            Object.values(dataFilteded)
+              .sort((a, b) => a.nombre.localeCompare(b.nombre))
+              .map(country => (
               <button 
                 type='button'
                 onClick={selectOption} 

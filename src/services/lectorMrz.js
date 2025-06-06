@@ -3,8 +3,7 @@ import { urls } from './urls.js'
 export const lectorMrz = async (file) => {
     const formData = new FormData()
     formData.append('file', file)
-    console.log(file instanceof File)
-    console.log(typeof(file))
+    console.log('file: ', file)
 
     try{
         const response = await fetch(urls.lectorCodeMrz, {
@@ -22,8 +21,7 @@ export const lectorMrz = async (file) => {
 export const lectorAddress = async (file) => {
     const formData = new FormData()
     formData.append('file', file)
-    console.log(file instanceof File)
-    console.log(typeof(file))
+    console.log('file: ', file)
 
     try{
         const response = await fetch(urls.lectorCuilAndAddress, {

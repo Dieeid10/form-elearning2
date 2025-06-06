@@ -12,8 +12,8 @@ import { CuitInput } from "./CuitInput"
 
 export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, prevForm = null, address = false, AuthorizationText = false, AuthorizationCheck = false, checked=false, toggleCheckbox=false, cuitInput=false }) => {
   const { error, changeError } = useError()
-  const { updateData, dataStudent } = useDataStudent()
-  const { setStep } = useStep()
+  const { updateData, dataStudent, saveDate } = useDataStudent()
+  const { step, setStep } = useStep()
   const { isYounger } = useIsYounger()
 
   const handleSubmit = (event) => {
@@ -27,6 +27,10 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
         changeError('Datos incorrectos')
         return
       }
+    }
+    if(step === 'FormData') {
+      saveDate()
+      return
     }
     updateData(dataFormStudent)
     !!nextForm && setStep(nextForm)

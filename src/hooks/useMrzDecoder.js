@@ -8,7 +8,7 @@ export function useMrzDecoder() {
     const getCuilAndAddress = async (file, parent) => {
         const response = await lectorAddress(file)
         const newData = {}
-        if (response.successful) {
+        if (response?.successful) {
             if (response.address) {
                 newData[parent ? 'addressAdult' : 'address'] = response.address
             }
@@ -42,7 +42,7 @@ export function useMrzDecoder() {
     const getDataMrz = async (file, parent) => {
         const response = await lectorMrz(file)
         let newDataDni
-        if(response.successful) {
+        if(response?.successful) {
             if(parent && !dataStudent?.nameAdult && !dataStudent?.lastNameAdult) {
                 newDataDni = {
                   lastNameAdult: response.data_document['surname'] ?? 'n/d',

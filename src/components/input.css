@@ -1,0 +1,5 @@
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.05) inset !important; /* igual que bg-white/5 */
+    -webkit-text-fill-color: #ffffff !important; /* texto blanco */
+    transition: background-color 9999s ease-in-out 0s; /* truco para evitar flash blanco */
+}

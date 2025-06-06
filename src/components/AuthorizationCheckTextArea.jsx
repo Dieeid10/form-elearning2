@@ -6,7 +6,7 @@ export const AuthorizationCheckTextArea = ({checked, toggleCheckbox}) => {
     return (
         <div className="flex gap-4 flex-col justify-end items-center">
             <div
-                className="w-full h-[450px] overflow-y-auto overflow-x-hidden p-4 border rounded text-justify"
+                className="w-full h-[50vh] overflow-y-auto overflow-x-hidden p-4 border rounded text-justify"
             >
                     <h2>Estimada Familia:</h2>
                     <p>En el marco de la emergencia sanitaria producto del COVID19 y asumiendo el
@@ -45,15 +45,14 @@ export const AuthorizationCheckTextArea = ({checked, toggleCheckbox}) => {
                     transitoria hasta tanto lo realicen, sin derecho a reclamo o indemnización de ningún tipo.</p>
 
                     <p>Será el referente parental a cargo, quien autorice para que pueda participar de diferentes clases
-                    virtuales. La/el que suscribe {dataStudent?.nameAdult} {dataStudent?.lastNameAdult} {dataStudent?.documentTypeAdult} {dataStudent?.documentNumberAdult} en carácter de _______________ de la/el estudiante {dataStudent?.name} {dataStudent?.lastName} {dataStudent?.documentType} {dataStudent?.documentNumber} preinscripto en el curso: _____________________________
+                    virtuales. La/el que suscribe {dataStudent?.nameAdult} {dataStudent?.lastNameAdult} {dataStudent?.documentTypeAdult} {dataStudent?.documentNumberAdult} al estudiante {dataStudent?.name} {dataStudent?.lastName} {dataStudent?.documentType} {dataStudent?.documentNumber} preinscripto en el curso: _____________________________
                     Autorizo a participar de clases en entornos virtuales en la plataforma Elearning Total con fines
                     exclusivamente pedagógicos realizadas por la Universidad Tecnológica Nacional - Facultad
                     Regional Resistencia, desligando a dicha Facultad, a la plataforma, docentes, coordinadores y/o
                     tutores de la responsabilidad por cualquier situación imprevista que pueda suscitarse,
-                    comprometiéndome a acompañar a mi hijo/a durante el desarrollo de éstas.
+                    comprometiéndome a acompañar a mi hijo/a durante el desarrollo de éstas.</p>
                 
-                    Fecha___________________
-                    Mail del alumno, para conectarse a la plataforma virtual:__________________________</p>
+                    <p>Mail del alumno, para conectarse a la plataforma virtual:__________________________</p>
             </div>
             <input
                 type="checkbox"

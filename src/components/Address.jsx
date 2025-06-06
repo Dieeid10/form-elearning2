@@ -7,33 +7,34 @@ export function Address ({ dataStudent, Input }) {
       <Country />
       {
         dataStudent.country === 'AR' &&
-        <SelectProvinces />
+        <div className="flex gap-4 justify-center items-center">
+          <SelectProvinces />
+          <Input
+            key='localityStudentForm'
+            name='locality'
+            id='locality'
+            label='Ingrese su localidad: '
+            type='text'
+          />
+        </div>
       }
-      {
-        dataStudent.country === 'AR' &&
+      <div className="flex gap-4 justify-center items-center">
         <Input
-          key='localityStudentForm'
-          name='locality'
-          id='locality'
-          label='Ingrese su localidad: '
+          key='addressStudentForm'
+          name='address'
+          id='address'
+          label='Ingrese su dirección: '
+          type='text'
+          value={dataStudent.address}
+        />
+        <Input
+          key='provinceStudentFormData'
+          name='CP'
+          id='CP'
+          label='Ingrese su código postal: '
           type='text'
         />
-      }
-      <Input
-        key='addressStudentForm'
-        name='address'
-        id='address'
-        label='Ingrese su dirección: '
-        type='text'
-        value={dataStudent.address || ''}
-      />
-      <Input
-        key='provinceStudentFormData'
-        name='CP'
-        id='CP'
-        label='Ingrese su código postal: '
-        type='text'
-      />
+      </div>
     </>
   )
 }
