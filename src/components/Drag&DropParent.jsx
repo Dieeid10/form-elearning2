@@ -12,7 +12,7 @@ import './imgBackround.css'
 
 export function ImageDropzoneParent({ frontOrBack, parent = true }) {
   const { handleDragOver, handleDrop } = useDrop({frontOrBack})
-  const { decodePDF417, loading } = usePDF417Decoder()
+  const { decodePDF417, loading, changeLoading } = usePDF417Decoder()
   const { charge, updateCharge } = useCharge()
   const { error } = useError()
   const { dataStudent } = useDataStudent()
@@ -62,9 +62,10 @@ export function ImageDropzoneParent({ frontOrBack, parent = true }) {
           />
         }
         <h4 className="text-sky-200 text-lg font-bold z-10" >Arrastra la imagen aquí o </h4>
-        <PDF417DecoderParent frontOrBack={frontOrBack} decodePDF417={decodePDF417} parent={parent} updateCharge={updateCharge} />
+        <PDF417DecoderParent frontOrBack={frontOrBack} decodePDF417={decodePDF417} parent={parent} updateCharge={updateCharge} changeLoading={changeLoading} />
         {
-          error &&
+          !!error &&
+          !loading &&
           <div 
             className="absolute top-5 bg-slate-100 font-semibold text-slate-600 opacity-50 h-1/3 w-1/2 flex justify-center items-center rounded-lg p-10 hover:opacity-100"
           > 

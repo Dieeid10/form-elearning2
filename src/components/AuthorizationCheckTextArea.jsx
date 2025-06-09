@@ -52,7 +52,8 @@ export const AuthorizationCheckTextArea = ({checked, toggleCheckbox}) => {
                     tutores de la responsabilidad por cualquier situación imprevista que pueda suscitarse,
                     comprometiéndome a acompañar a mi hijo/a durante el desarrollo de éstas.</p>
                 
-                    <p>Mail del alumno, para conectarse a la plataforma virtual:__________________________</p>
+                    {dataStudent?.mail && <p>Mail del alumno, para conectarse a la plataforma virtual: {dataStudent.mail}</p>}
+                    
             </div>
             <input
                 type="checkbox"

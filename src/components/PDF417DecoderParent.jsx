@@ -3,7 +3,7 @@ import { useDataStudent } from '../hooks/useDataStudent'
 import { useMrzDecoder } from '../hooks/useMrzDecoder'
 import './TestFile.css'
 
-export function PDF417DecoderParent({frontOrBack, decodePDF417, updateCharge, parent = false}) {
+export function PDF417DecoderParent({frontOrBack, decodePDF417, updateCharge, changeLoading, parent = false}) {
     const { lectorDocumentMrz } = useMrzDecoder()
     const { error, changeError } = useError()
     const { updateData } = useDataStudent()
@@ -11,6 +11,9 @@ export function PDF417DecoderParent({frontOrBack, decodePDF417, updateCharge, pa
     const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
     const handleFiles = async (f) => {
+      await changeLoading(true)
+      await updateCharge('0')
+      await wait(100)
       await updateCharge('10')
       await wait(100)
 
@@ -66,12 +69,13 @@ export function PDF417DecoderParent({frontOrBack, decodePDF417, updateCharge, pa
           return
         }
         const newData = { ...newDataMrz, ...newImage, ...newDataDni }
-        changeError(null)
         if (!error) updateData(newData)
         await updateCharge('100')
         await wait(100)
         await updateCharge(null)
         await wait(100)
+        changeLoading(false)
+        changeError(null)
       }
       img.src = newUrlImg
     }

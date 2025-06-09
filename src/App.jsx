@@ -36,10 +36,17 @@ function App() {
   const { dataStudent, updateData } = useDataStudent()
   const { step } = useStep()
   const [searchParams] = useSearchParams()
-  const tel = searchParams.get('tel')
-  if (tel) updateData({ 
-    'tel': tel
-  })
+  const fieldsToUpdate = ['tel', 'mail']
+
+  fieldsToUpdate.forEach((field) => {
+    const value = searchParams.get(field)
+    const currentValue = dataStudent?.[field]
+
+    if (value && !currentValue) {
+      updateData({ [field]: value })
+      console.log(field, value)
+    }
+  });
   
 
   return (

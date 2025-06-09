@@ -10,6 +10,10 @@ export function usePDF417Decoder() {
   const { changeError } = useError()
   const intents = useRef(0)
 
+  const changeLoading = (value) => {
+    setLoading(value)
+  }
+
   const decodePDF417 = async (ctx, img, frontOrBack, parent=false) => {
     if(frontOrBack === 'back') return
 
@@ -123,5 +127,5 @@ export function usePDF417Decoder() {
     }
   }
 
-  return { decodedContent, decodePDF417, loading }
+  return { decodedContent, decodePDF417, loading, changeLoading }
 }
