@@ -23,10 +23,13 @@ export function useDrop({frontOrBack}) {
       const diferenceMS = currentDate - dateOdBirth
       const milisecondsInYear = 1000 * 60 * 60 * 24 * 365.25
       const diferenceYear = diferenceMS / milisecondsInYear
-      if(Math.floor(diferenceYear) >= 18) {
-        updateData({younger: false})
-      } else {
-        updateData({younger: true})
+      
+      if(!(typeof dataStudent.younger === "boolean")) {
+        if(Math.floor(diferenceYear) >= 18) {
+          updateData({younger: false})
+        } else {
+          updateData({younger: true})
+        }
       }
   }
 

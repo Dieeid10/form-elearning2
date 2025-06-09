@@ -3,13 +3,15 @@ import { useError } from './useError'
 import { BrowserMultiFormatReader } from '@zxing/library'
 import { useStep } from "../hooks/useStepForm"
 import { useIntents } from './useIntents'
+import { useIsYounger } from './useIsYounger'
 
 export function usePDF417Decoder() {
   const { setStep } = useStep()
   const { intents, incrementIntents, intentsLimit } = useIntents()
+  const { isYounger } = useIsYounger()
+  const { changeError } = useError()
   const [ decodedContent, setDecodedContent ] = useState(null)
   const [ loading, setLoading ] = useState(false)
-  const { changeError } = useError()
 
   const changeLoading = (value) => {
     setLoading(value)
@@ -56,6 +58,7 @@ export function usePDF417Decoder() {
       rotatedImg.src = canvas.toDataURL()
       return rotatedImg
     }
+
     
     // Funcion recursiva para decodificar la imagen
     // Si no se puede decodificar, rota la imagen y vuelve a intentar
@@ -94,6 +97,8 @@ export function usePDF417Decoder() {
       const dataDni = resultJson['text'].split('@')
       console.log(dataDni)
       const dateFormat = convertToISOFormat(dataDni[6])
+      const isYoungerResult = await isYounger(dateFormat)
+      console.log('isYoungerResult: ', isYoungerResult)
       if(parent) {
         newDataDni = {
           nTramiteAdult: dataDni[0] ?? 'n/d',
@@ -104,7 +109,7 @@ export function usePDF417Decoder() {
           ejemplarAdult: dataDni[5] ?? 'n/d',
           dateOdBirthAdult: dateFormat ?? 'n/d',
           dateOfIssueAdult: dataDni[7] ?? 'n/d',
-          documentTypeAdult: 'DNI'
+          documentTypeAdult: 'DNI',
         }
       } else {
         newDataDni = {
@@ -116,7 +121,8 @@ export function usePDF417Decoder() {
             ejemplar: dataDni[5] ?? 'n/d',
             dateOdBirth: dateFormat ?? 'n/d',
             dateOfIssue: dataDni[7] ?? 'n/d',
-            documentType: 'DNI'
+            documentType: 'DNI',
+            younger: isYoungerResult
         }
       }
       setDecodedContent(newDataDni)

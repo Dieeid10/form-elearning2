@@ -16,7 +16,7 @@ export function FormMail () {
     const [ error, setError ] = useState()
     const { setStep } = useStep()
     const { dataStudent } = useDataStudent()
-    const title = dataStudent.younger == 'true' ? "Ingrese los datos del alumno menor de edad: " : "Complete con los datos del alumno que realizará la cursada:"
+    const title = dataStudent.younger ? "Ingrese los datos del alumno menor de edad: " : "Complete con los datos del alumno que realizará la cursada:"
     const next = dataStudent.younger ? "DropzoneFrontParent" : "FormData"
     setStep(next)
 

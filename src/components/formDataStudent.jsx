@@ -23,7 +23,7 @@ export function FormDataStudent () {
             placeholder: dataStudent?.name || 'Ernesto Pedro',
             value: dataStudent?.name || '',
             key: 'nameStudentFormData',
-            /* readOnly: !!dataStudent?.name */
+            /* ...(dataStudent?.name && { readOnly: true }) */
         },
         obj2: { 
             name: 'lastName',
@@ -92,6 +92,7 @@ export function FormDataStudent () {
             label: 'Ingrese su número de documento:',
             type: 'text',
             key: 'numberDocumentFormData',
+            value: dataStudent?.documentNumber || '',
             /* readOnly: !!dataStudent?.documentNumber, value: dataStudent?.documentNumber || ''  */
         },
     }

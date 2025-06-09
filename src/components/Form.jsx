@@ -39,7 +39,8 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
   const handleInputChange = (e, index) => {
     const newInputValues = {} 
     newInputValues[index] = e.target.value 
-    if (e.target.type === 'date'){
+    if (e.target.type === 'date' && !(typeof dataStudent.younger === "boolean")){
+      console.log("ingreso al if de fecha")
       isYounger(e.target.value)
         .then((result) => {
           newInputValues['younger'] = result

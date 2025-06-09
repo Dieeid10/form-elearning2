@@ -21,10 +21,10 @@ export function useIsYounger () {
 
       return resultYounger
 
-  } catch (error) {
-      console.error("Error en isYounger:", error);
-      throw error;
-  }
+    } catch (error) {
+        console.error("Error en isYounger:", error);
+        throw error;
+    }
 
   }
 

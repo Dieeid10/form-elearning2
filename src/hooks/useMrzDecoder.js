@@ -1,9 +1,11 @@
 import { lectorMrz, lectorAddress } from '../services/lectorMrz'
 import { useDataStudent } from './useDataStudent'
+import { useIsYounger } from './useIsYounger'
 import countryJson from '../fichero/paises.json'
 
 export function useMrzDecoder() {
     const { dataStudent } = useDataStudent()
+    const { isYounger } = useIsYounger()
 
     const getCuilAndAddress = async (file, parent) => {
         const response = await lectorAddress(file)
@@ -69,6 +71,10 @@ export function useMrzDecoder() {
                 newDataDni = {
                     country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
                 }
+            }
+
+            if(!(typeof dataStudent.younger === "boolean") && response.data_document['date_of_birth']) {
+                newDataDni.younger = await isYounger(response.data_document['date_of_birth'])
             }
             
             console.log('Termino de escanear el mrz.')
