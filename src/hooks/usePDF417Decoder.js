@@ -1,14 +1,15 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useError } from './useError'
 import { BrowserMultiFormatReader } from '@zxing/library'
 import { useStep } from "../hooks/useStepForm"
+import { useIntents } from './useIntents'
 
 export function usePDF417Decoder() {
   const { setStep } = useStep()
+  const { intents, incrementIntents, intentsLimit } = useIntents()
   const [ decodedContent, setDecodedContent ] = useState(null)
   const [ loading, setLoading ] = useState(false)
   const { changeError } = useError()
-  const intents = useRef(0)
 
   const changeLoading = (value) => {
     setLoading(value)
@@ -80,11 +81,12 @@ export function usePDF417Decoder() {
     try {
       const resultJson = await decoderImage(img)
       if(!resultJson) {
-        if(intents.current < 3) {
+        if(intents.current < intentsLimit) {
           console.log('Intento de decodificacion: ', intents.current)
-          intents.current++
+          incrementIntents()
         } else {
           parent ? setStep('FormDataAdulto') : setStep('FormDataStudent')
+          changeError('No se pudo decodificar el documento. Ingrese los datos manualmente.')
         }
         setLoading(false)
         return

@@ -1,10 +1,12 @@
 import { useError } from '../hooks/useError'
 import { useDataStudent } from '../hooks/useDataStudent'
 import { useMrzDecoder } from '../hooks/useMrzDecoder'
+import { useIntents } from '../hooks/useIntents'
 import './TestFile.css'
 
 export function PDF417Decoder({frontOrBack, decodePDF417, updateCharge, changeLoading, parent = false}) {
     const { lectorDocumentMrz } = useMrzDecoder()
+    const { intents, incrementIntents, intentsLimit } = useIntents()
     const { error, changeError } = useError()
     const { updateData } = useDataStudent()
 
@@ -64,7 +66,7 @@ export function PDF417Decoder({frontOrBack, decodePDF417, updateCharge, changeLo
           console.log('Ingreso al if de error', newDataDni)
           await updateCharge(null)
           await wait(100)
-          changeError('No se pudo decodificar el documento. Por favor, asegúrese de que la imagen sea clara y legible.')
+          intents < intentsLimit ? changeError('No se pudo decodificar el documento. Por favor, cargue los datos manualmente.') : changeError('No se pudo decodificar el documento. Por favor, asegúrese de que la imagen sea clara y legible.')
           return
         }
         const newData = { ...newDataMrz, ...newImage, ...newDataDni }

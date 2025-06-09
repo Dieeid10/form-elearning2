@@ -4,9 +4,7 @@ import { Footer } from './components/Footer'
 import { FormMail } from './components/FormMail'
 import { IS_DEVELOPMENT } from './config'
 import { useStep } from './hooks/useStepForm'
-import './components/cube.css'
 import { SelectChargingMode } from './components/SelectChargingMode'
-import './components/mirrorEfect.css'
 import { FormData } from './components/FormData'
 import { FormDataAdulto } from './components/FormDataAdulto'
 import { ConfirmData } from './components/ConfirmData'
@@ -16,6 +14,8 @@ import { AuthorizationForm } from './components/AuthorizationForm'
 import { ImageDropzoneParent } from './components/Drag&DropParent'
 import { AuthorizationChech } from './components/Authoritation'
 import { useSearchParams } from 'react-router-dom'
+import './components/cube.css'
+import './components/mirrorEfect.css'
 
 const steps = {
   formMail: <FormMail className='' />,
@@ -36,7 +36,7 @@ function App() {
   const { dataStudent, updateData } = useDataStudent()
   const { step } = useStep()
   const [searchParams] = useSearchParams()
-  const fieldsToUpdate = ['tel', 'mail']
+  const fieldsToUpdate = ['id_student', 'tel', 'mail', 'curso']
 
   fieldsToUpdate.forEach((field) => {
     const value = searchParams.get(field)

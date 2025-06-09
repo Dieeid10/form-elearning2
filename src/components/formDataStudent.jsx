@@ -23,7 +23,7 @@ export function FormDataStudent () {
             placeholder: dataStudent?.name || 'Ernesto Pedro',
             value: dataStudent?.name || '',
             key: 'nameStudentFormData',
-            readOnly: !!dataStudent?.name
+            /* readOnly: !!dataStudent?.name */
         },
         obj2: { 
             name: 'lastName',
@@ -33,14 +33,14 @@ export function FormDataStudent () {
             placeholder: dataStudent?.lastName || 'Gonzalez',
             value: dataStudent?.lastName || '',
             key: 'lastNameStudentFormData',
-            readOnly: !!dataStudent?.lastName
+            /* readOnly: !!dataStudent?.lastName */
         },
         ...( dataStudent?.dateOdBirth ? 
             {
                 obj3: { 
                     name: 'birthdate',
                     id: 'birthdate',
-                    label: 'Fecha de nacimiento:',
+                    label: 'Fecha de nacimiento (mes/día/año):',
                     type: 'text',
                     placeholder: '',
                     key: 'birthdateStudentFormData',
@@ -52,7 +52,7 @@ export function FormDataStudent () {
                 obj3: { 
                     name: 'birthdate',
                     id: 'birthdate',
-                    label: 'Fecha de nacimiento:',
+                    label: 'Fecha de nacimiento (mes/día/año):',
                     type: 'date',
                     placeholder: '',
                     key: 'birthdateStudentFormData',
@@ -69,7 +69,7 @@ export function FormDataStudent () {
         label: 'Tipo de documento:',
         nameType: 'documentType',
         value: dataStudent?.documentType || '',
-        readOnly: !!dataStudent?.documentType,
+        /* readOnly: !!dataStudent?.documentType, */
         typeToDocument: [
             { value: '', label: 'Elegir...' },
             { value: 'DNI', label: 'DNI' },
@@ -86,7 +86,14 @@ export function FormDataStudent () {
             { value: 'CURP', label: 'CURP' },
             { value: 'Otro Documento', label: 'Otro Documento' },
         ],
-        numberToDocument: { name: 'documentNumber', id: 'documentNumber', label: 'Ingrese su número de documento:', type: 'text', key: 'numberDocumentFormData', readOnly: !!dataStudent?.documentNumber, value: dataStudent?.documentNumber || '' },
+        numberToDocument: { 
+            name: 'documentNumber',
+            id: 'documentNumber',
+            label: 'Ingrese su número de documento:',
+            type: 'text',
+            key: 'numberDocumentFormData',
+            /* readOnly: !!dataStudent?.documentNumber, value: dataStudent?.documentNumber || ''  */
+        },
     }
 
     const validateData = async (dataFormStudent) => {

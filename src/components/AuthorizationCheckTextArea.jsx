@@ -45,7 +45,7 @@ export const AuthorizationCheckTextArea = ({checked, toggleCheckbox}) => {
                     transitoria hasta tanto lo realicen, sin derecho a reclamo o indemnización de ningún tipo.</p>
 
                     <p>Será el referente parental a cargo, quien autorice para que pueda participar de diferentes clases
-                    virtuales. La/el que suscribe {dataStudent?.nameAdult} {dataStudent?.lastNameAdult} {dataStudent?.documentTypeAdult} {dataStudent?.documentNumberAdult} al estudiante {dataStudent?.name} {dataStudent?.lastName} {dataStudent?.documentType} {dataStudent?.documentNumber} preinscripto en el curso: _____________________________
+                    virtuales. La/el que suscribe {dataStudent?.nameAdult} {dataStudent?.lastNameAdult} {dataStudent?.documentTypeAdult} {dataStudent?.documentNumberAdult} al estudiante {dataStudent?.name} {dataStudent?.lastName} {dataStudent?.documentType} {dataStudent?.documentNumber} { dataStudent?.curso && `preinscripto en el curso: ${dataStudent?.curso}` }.
                     Autorizo a participar de clases en entornos virtuales en la plataforma Elearning Total con fines
                     exclusivamente pedagógicos realizadas por la Universidad Tecnológica Nacional - Facultad
                     Regional Resistencia, desligando a dicha Facultad, a la plataforma, docentes, coordinadores y/o

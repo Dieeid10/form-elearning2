@@ -19,7 +19,7 @@ export function FormDataAdulto () {
             placeholder: 'Ernesto Pedro',
             key: 'nameFormAdult',
             value: dataStudent?.nameAdult || '',
-            readOnly: !!dataStudent?.nameAdult
+            /* readOnly: !!dataStudent?.nameAdult */
         },
         obj2: { 
             name: 'lastNameAdult',
@@ -29,7 +29,7 @@ export function FormDataAdulto () {
             placeholder: 'Gonzalez',
             key: 'lastNameFormAdult',
             value: dataStudent?.lastNameAdult || '',
-            readOnly: !!dataStudent?.lastNameAdult
+            /* readOnly: !!dataStudent?.lastNameAdult */
         }
     }
 
@@ -59,7 +59,7 @@ export function FormDataAdulto () {
             label: 'Ingrese su número de documento:',
             type: 'text',
             key: 'numberDocumentFormData',
-            readOnly: !!dataStudent?.documentNumberAdult, value: dataStudent?.documentNumberAdult || '' 
+            /* readOnly: !!dataStudent?.documentNumberAdult, value: dataStudent?.documentNumberAdult || ''  */
         },
     }
 
