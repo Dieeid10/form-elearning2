@@ -2,10 +2,12 @@ import { useDataStudent } from "./useDataStudent"
 import { useError } from "./useError"
 import { usePDF417Decoder } from "./usePDF417Decoder"
 import { useMrzDecoder } from '../hooks/useMrzDecoder'
+import { useIntents } from '../hooks/useIntents'
 
 export function useDrop({frontOrBack}) {
   const { decodedContent, decodePDF417 } = usePDF417Decoder()
   const { lectorDocumentMrz } = useMrzDecoder()
+  const { intents, incrementIntents, intentsLimit } = useIntents()
   const { error, changeError } = useError()
   const { dataStudent, updateData } = useDataStudent()
 
@@ -39,8 +41,9 @@ export function useDrop({frontOrBack}) {
 
   const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-  const handleDrop = async (file, parent=false, updateCharge) => {
+  const handleDrop = async (file, parent=false, updateCharge, changeLoading) => {
     console.log('El nuevo archivo es: ', file)
+    changeLoading(true)
     changeError(null)
     await updateCharge('10')
     await wait(100)
@@ -86,17 +89,20 @@ export function useDrop({frontOrBack}) {
       }
       await updateCharge('80')
       await wait(100)
-      if((!newDataDni?.documentNumber && !newDataDni?.documentNumberAdult) && (!newDataMrz?.country && !newDataMrz?.countryAdult)) {
+      if((!newDataDni?.documentNumber && !newDataDni?.documentNumberAdult) && (!newDataMrz?.country && !newDataMrz?.countryAdult) && frontOrBack === 'front') {
         await updateCharge(null)
         await wait(100)
-        changeError('No se pudo decodificar el documento. Por favor, asegúrese de que la imagen sea clara y legible.')
+        intents < intentsLimit ? changeError('No se pudo decodificar el documento. Por favor, cargue los datos manualmente.') : changeError('No se pudo decodificar el documento. Por favor, asegúrese de que la imagen sea clara y legible.')
         return
       }
       const newData = { ...newDataMrz, ...newImage, ...newDataDni }
-      if (!error) updateData(newData)
+      if (!error && !!newData) updateData(newData)
       await updateCharge('100')
       await wait(100)
-      await wait(null)
+      await updateCharge(null)
+      await wait(100)
+      changeLoading(false)
+      changeError(null)
     }
     img.src = newUrlImg
   }

@@ -51,7 +51,7 @@ export function ImageDropzone({ frontOrBack, parent = false }) {
         onDrop={ (e) => {
           e.preventDefault()
           const newFile = e.dataTransfer.files[0]
-          handleDrop(newFile, parent, updateCharge)}}
+          handleDrop(newFile, parent, updateCharge, changeLoading)}}
         className= {`h-full w-full flex justify-center items-center flex-col sm:flex-row gap-2 rounded-xl relative overflow-hidden  ${ !imageSrc && (frontOrBack == 'front' ? 'imgBackroundFront' : 'imgBackroundBack') }`}
       >
         {
