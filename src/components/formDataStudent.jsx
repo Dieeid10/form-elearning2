@@ -23,7 +23,7 @@ export function FormDataStudent () {
             placeholder: dataStudent?.name || 'Ernesto Pedro',
             value: dataStudent?.name || '',
             key: 'nameStudentFormData',
-            /* ...(dataStudent?.name && { readOnly: true }) */
+            ...(dataStudent?.name && { readOnly: true })
         },
         obj2: { 
             name: 'lastName',
@@ -33,7 +33,7 @@ export function FormDataStudent () {
             placeholder: dataStudent?.lastName || 'Gonzalez',
             value: dataStudent?.lastName || '',
             key: 'lastNameStudentFormData',
-            /* readOnly: !!dataStudent?.lastName */
+            readOnly: !!dataStudent?.lastName
         },
         ...( dataStudent?.dateOdBirth ? 
             {
@@ -69,7 +69,7 @@ export function FormDataStudent () {
         label: 'Tipo de documento:',
         nameType: 'documentType',
         value: dataStudent?.documentType || '',
-        /* readOnly: !!dataStudent?.documentType, */
+        readOnly: !!dataStudent?.documentType,
         typeToDocument: [
             { value: '', label: 'Elegir...' },
             { value: 'DNI', label: 'DNI' },
@@ -93,7 +93,7 @@ export function FormDataStudent () {
             type: 'text',
             key: 'numberDocumentFormData',
             value: dataStudent?.documentNumber || '',
-            /* readOnly: !!dataStudent?.documentNumber, value: dataStudent?.documentNumber || ''  */
+            readOnly: !!dataStudent?.documentNumber
         },
     }
 

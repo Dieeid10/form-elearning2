@@ -62,15 +62,14 @@ export function PDF417Decoder({frontOrBack, decodePDF417, updateCharge, changeLo
         }
         await updateCharge('80')
         await wait(100)
-        if((!newDataDni?.documentNumber && !newDataDni?.documentNumberAdult) && (!newDataMrz?.country && !newDataMrz?.countryAdult)) {
-          console.log('Ingreso al if de error', newDataDni)
+        if((!newDataDni?.documentNumber && !newDataDni?.documentNumberAdult) && (!newDataMrz?.country && !newDataMrz?.countryAdult) && frontOrBack === 'front') {
           await updateCharge(null)
           await wait(100)
           intents < intentsLimit ? changeError('No se pudo decodificar el documento. Por favor, cargue los datos manualmente.') : changeError('No se pudo decodificar el documento. Por favor, asegúrese de que la imagen sea clara y legible.')
           return
         }
         const newData = { ...newDataMrz, ...newImage, ...newDataDni }
-        if (!error) updateData(newData)
+        if (!error && !!newData) updateData(newData)
         await updateCharge('100')
         await wait(100)
         await updateCharge(null)

@@ -26,10 +26,10 @@ export function ImageDropzoneParent({ frontOrBack, parent = true }) {
   
   const handleSubmitForm = async (event) => {
     event.preventDefault()
-    if (!!dataStudent.documentNumber && frontOrBack === 'front') {
+    if (!!dataStudent.documentNumberAdult && frontOrBack === 'front') {
       setStep('DropzoneBackParent')
     }
-    if (!!dataStudent.frontImageFile && frontOrBack === 'back') {
+    if (frontOrBack === 'back') {
       setStep('FormDataAdulto')
     }
   }

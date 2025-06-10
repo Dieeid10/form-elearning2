@@ -16,43 +16,49 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
   const { step, setStep } = useStep()
   const { isYounger } = useIsYounger()
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
+  
     const dataFormStudent = Object.fromEntries(new window.FormData(event.target))
+  
+    // Esperar el resultado de isYounger si es necesario
+    if (
+      dataFormStudent.birthdate &&
+      dataFormStudent.birthdate !== '' &&
+      typeof dataStudent.younger !== 'boolean'
+    ) {
+      try {
+        console.log("Ingreso al if de fecha")
+        console.log('La fecha es: ', dataFormStudent.birthdate)
+  
+        const result = await isYounger(dataFormStudent.birthdate)
+        dataFormStudent.younger = result
+      } catch (error) {
+        console.error("Error al obtener el resultado:", error)
+        changeError('Error al validar la edad')
+        return
+      }
+    }
+  
+    // Validar los datos
     if (validateData) {
       const result = validateData(dataFormStudent)
-      
-      if(!result) {
-        if(error !== '') return
+      if (!result) {
+        if (error !== '') return
         changeError('Datos incorrectos')
         return
       }
     }
-    if(step === 'FormData') {
+  
+    // Guardar o avanzar en el formulario
+    if (step === 'FormData') {
       saveDate()
       return
     }
+  
     updateData(dataFormStudent)
-    !!nextForm && setStep(nextForm)
+    if (nextForm) setStep(nextForm)
   }
-
-  const handleInputChange = (e, index) => {
-    const newInputValues = {} 
-    newInputValues[index] = e.target.value 
-    if (e.target.type === 'date' && !(typeof dataStudent.younger === "boolean")){
-      console.log("ingreso al if de fecha")
-      isYounger(e.target.value)
-        .then((result) => {
-          newInputValues['younger'] = result
-          updateData(newInputValues)
-        })
-        .catch((error) => {
-          console.error("Error al obtener el resultado:", error);
-      });
-    }
-    updateData(newInputValues)
-  }
-
 
     return (
       <section className="h-full w-full flex flex-col justify-center items-center mirrorEffect p-2">
@@ -77,7 +83,6 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
                 type={data[key].type}
                 placeholder={data[key].placeholder}
                 value={data[key].value}
-                onChange={(e) => handleInputChange(e, data[key].name)}
                 max={data[key].max || false}
                 min={data[key].min || false}
                 pattern={data[key].pattern || false}

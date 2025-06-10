@@ -83,8 +83,8 @@ export function usePDF417Decoder() {
 
     try {
       const resultJson = await decoderImage(img)
-      if(!resultJson) {
-        if(intents.current < intentsLimit) {
+      if(!resultJson && frontOrBack === 'front') {
+        if(intents.current < intentsLimit) {  
           console.log('Intento de decodificacion: ', intents.current)
           incrementIntents()
         } else {

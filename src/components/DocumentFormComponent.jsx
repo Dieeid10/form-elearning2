@@ -12,7 +12,7 @@ export function DocumentForm ({ documentForm, Input }) {
       <select 
         className='border text-sm rounded-lg block w-full p-2.5 bg-sky-200 broder-gray-600 placeholder-gray-400 text-sky-500 rounded-full'
         name={documentForm.nameType}
-        value={documentForm?.value || ''}
+        {...(documentForm?.value && { value: documentForm.value })}
       >
         {
           documentForm.typeToDocument.map(type => (

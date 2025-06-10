@@ -1,7 +1,7 @@
 import { useId } from "react"
 import './input.css'
 
-export const Input = ({ id, name, label, type, placeholder, value, min, max, pattern, ...porps }) => {
+export const Input = ({ id, name, label, type, placeholder, value = null, min, max, pattern, ...porps }) => {
   const fieldset = useId()
   const inputId = useId()
   console.log(max)
@@ -19,10 +19,10 @@ export const Input = ({ id, name, label, type, placeholder, value, min, max, pat
             name={name} 
             placeholder={placeholder}
             {...porps} 
-            value={value}
             {...(min && { min: min })}
             {...(max && { max: max })}
             {...(pattern && { pattern: pattern })}
+            {...(value && { value: value })}
             required
           />
         </fieldset>

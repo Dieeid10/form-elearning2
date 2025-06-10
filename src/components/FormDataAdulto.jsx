@@ -19,7 +19,7 @@ export function FormDataAdulto () {
             placeholder: 'Ernesto Pedro',
             key: 'nameFormAdult',
             value: dataStudent?.nameAdult || '',
-            /* readOnly: !!dataStudent?.nameAdult */
+            ...(dataStudent?.nameAdult && { readOnly: true })
         },
         obj2: { 
             name: 'lastNameAdult',
@@ -29,7 +29,7 @@ export function FormDataAdulto () {
             placeholder: 'Gonzalez',
             key: 'lastNameFormAdult',
             value: dataStudent?.lastNameAdult || '',
-            /* readOnly: !!dataStudent?.lastNameAdult */
+            ...(dataStudent?.lastNameAdult && { readOnly: true })
         }
     }
 
@@ -37,7 +37,7 @@ export function FormDataAdulto () {
         label: 'Tipo de documento:',
         nameType: 'documentTypeAdult',
         value: dataStudent?.documentTypeAdult || '',
-        readOnly: !!dataStudent?.documentTypeAdult,
+        ...(dataStudent?.documentTypeAdult && { readOnly: true }),
         typeToDocument: [
             { value: '', label: 'Elegir...' },
             { value: 'DNI', label: 'DNI' },
@@ -54,12 +54,14 @@ export function FormDataAdulto () {
             { value: 'CURP', label: 'CURP' },
             { value: 'Otro Documento', label: 'Otro Documento' },
         ],
-        numberToDocument: { name: 'documentNumberAdult',
+        numberToDocument: { 
+            name: 'documentNumberAdult',
             id: 'documentNumberAdult',
             label: 'Ingrese su número de documento:',
             type: 'text',
             key: 'numberDocumentFormData',
-            /* readOnly: !!dataStudent?.documentNumberAdult, value: dataStudent?.documentNumberAdult || ''  */
+            value: dataStudent?.documentNumberAdult || '',
+            ...(dataStudent?.documentNumberAdult && { readOnly: true })
         },
     }
 
