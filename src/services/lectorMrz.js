@@ -17,21 +17,3 @@ export const lectorMrz = async (file) => {
         console.error("Error al decodificar la imagen: ", error)
     }
 }
-
-export const lectorAddress = async (file) => {
-    const formData = new FormData()
-    formData.append('file', file)
-    console.log('file: ', file)
-
-    try{
-        const response = await fetch(urls.lectorCuilAndAddress, {
-            method: 'POST',
-            body: formData
-        })
-        const data = await response.json()
-        console.log('Se encontro la dirección o el cuil del alumno: ', data)
-        return data
-    } catch (error) {
-        console.error("Error al decodificar la imagen: ", error)
-    }
-}

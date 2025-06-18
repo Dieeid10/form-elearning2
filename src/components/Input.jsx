@@ -1,10 +1,18 @@
 import { useId } from "react"
 import './input.css'
+import { useDataStudent } from "../hooks/useDataStudent"
 
-export const Input = ({ id, name, label, type, placeholder, value = null, min, max, pattern, ...porps }) => {
+export const Input = ({ id, name, label, type, placeholder, value = null, min, max, pattern, autoSave = false, ...porps }) => {
+  const { updateData } = useDataStudent()
   const fieldset = useId()
   const inputId = useId()
-  console.log(max)
+  
+  const handleChange = (e) => {
+    const newValue = e.target.value
+    if (autoSave) {
+      updateData({ [name]: newValue })
+    }
+  }
 
       return (
         <fieldset 
@@ -23,6 +31,7 @@ export const Input = ({ id, name, label, type, placeholder, value = null, min, m
             {...(max && { max: max })}
             {...(pattern && { pattern: pattern })}
             {...(value && { value: value })}
+            onChange={handleChange}
             required
           />
         </fieldset>

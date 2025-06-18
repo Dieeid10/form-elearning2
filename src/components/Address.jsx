@@ -6,7 +6,7 @@ export function Address ({ dataStudent, Input }) {
     <>
       <Country />
       {
-        dataStudent.country === 'AR' &&
+        dataStudent.countryShort === 'AR' &&
         <div className="flex gap-4 justify-center items-center">
           <SelectProvinces />
           <Input
@@ -15,6 +15,8 @@ export function Address ({ dataStudent, Input }) {
             id='locality'
             label='Ingrese su localidad: '
             type='text'
+            value={dataStudent.locality}
+            autoSave={true}
           />
         </div>
       }
@@ -26,6 +28,7 @@ export function Address ({ dataStudent, Input }) {
           label='Ingrese su dirección: '
           type='text'
           value={dataStudent.address}
+          autoSave={true}
         />
         <Input
           key='provinceStudentFormData'
@@ -33,6 +36,8 @@ export function Address ({ dataStudent, Input }) {
           id='CP'
           label='Ingrese su código postal: '
           type='text'
+          value={dataStudent.CP}
+          autoSave={true}
         />
       </div>
     </>

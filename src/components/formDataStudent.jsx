@@ -40,7 +40,7 @@ export function FormDataStudent () {
                 obj3: { 
                     name: 'birthdate',
                     id: 'birthdate',
-                    label: 'Fecha de nacimiento (mes/día/año):',
+                    label: 'Fecha de nacimiento:',
                     type: 'text',
                     placeholder: '',
                     key: 'birthdateStudentFormData',
@@ -52,7 +52,7 @@ export function FormDataStudent () {
                 obj3: { 
                     name: 'birthdate',
                     id: 'birthdate',
-                    label: 'Fecha de nacimiento (mes/día/año):',
+                    label: 'Fecha de nacimiento:',
                     type: 'date',
                     placeholder: '',
                     key: 'birthdateStudentFormData',

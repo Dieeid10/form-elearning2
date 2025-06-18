@@ -9,10 +9,13 @@ import { Address } from "./Address"
 import { useIsYounger } from "../hooks/useIsYounger"
 import { AuthorizationCheckTextArea } from "./AuthorizationCheckTextArea"
 import { CuitInput } from "./CuitInput"
+import { useState } from "react"
+import { SavingDataElement } from "./SavingDataElement"
 
 export const Form = ({ data, validateData = null, title, nextForm = null, documentForm = null, prevForm = null, address = false, AuthorizationText = false, AuthorizationCheck = false, checked=false, toggleCheckbox=false, cuitInput=false }) => {
   const { error, changeError } = useError()
   const { updateData, dataStudent, saveDate } = useDataStudent()
+  const [ savingData, setSavingData ] = useState(false)
   const { step, setStep } = useStep()
   const { isYounger } = useIsYounger()
 
@@ -52,16 +55,22 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
   
     // Guardar o avanzar en el formulario
     if (step === 'FormData') {
-      saveDate()
+      setSavingData(true)
+      const result = await saveDate()
+      if(result) setSavingData(false)
       return
     }
   
-    updateData(dataFormStudent)
+    await updateData(dataFormStudent)
     if (nextForm) setStep(nextForm)
   }
 
     return (
       <section className="h-full w-full flex flex-col justify-center items-center mirrorEffect p-2">
+        {
+          savingData &&
+          <SavingDataElement />
+        }
         <h3
           className="text-xl text-white font-medium text-gray-300 self-start mx-10"
         >

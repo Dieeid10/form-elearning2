@@ -1,12 +1,11 @@
 import { useContext } from "react"
 import { DataContext } from "../context/dataStudent"
-
-const url = import.meta.env.MODE === 'development' ? 'http://localhost:8000' : 'https://api.example.com'
+import { saveDataStudent } from "../services/saveDataStudent"
 
 export function useDataStudent () {
     const {dataStudent, setDataStudent} = useContext(DataContext)
 
-    const updateData = (newData) => {
+    const updateData = async (newData) => {
         const newDataStudent = {
             ...dataStudent,
             ...newData
@@ -14,18 +13,9 @@ export function useDataStudent () {
         setDataStudent(newDataStudent)
     }
 
-    const saveDate = () => {
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataStudent)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
+    const saveDate = async () => {
+        const result = await saveDataStudent(dataStudent)
+        return result
     }
 
     return { dataStudent, updateData, saveDate }

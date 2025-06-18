@@ -1,4 +1,4 @@
-import { lectorMrz, lectorAddress } from '../services/lectorMrz'
+import { lectorMrz } from '../services/lectorMrz'
 import { useDataStudent } from './useDataStudent'
 import { useIsYounger } from './useIsYounger'
 import countryJson from '../fichero/paises.json'
@@ -6,29 +6,6 @@ import countryJson from '../fichero/paises.json'
 export function useMrzDecoder() {
     const { dataStudent } = useDataStudent()
     const { isYounger } = useIsYounger()
-
-    const getCuilAndAddress = async (file, parent) => {
-        const response = await lectorAddress(file)
-        const newData = {}
-        if (response?.successful) {
-            if (response.address) {
-                newData[parent ? 'addressAdult' : 'address'] = response.address
-            }
-    
-            if (response.cuil) {
-                newData[parent ? 'cuilAdult' : 'cuil'] = response.cuil
-            }
-
-            if (response.country) {
-                newData[parent ? 'countryAdult' : 'country'] = response.country
-            }
-
-            if (response.province) {
-                newData[parent ? 'provinceAdult' : 'province'] = response.province
-            }
-        }
-        return newData
-    }
 
     function convertDateMrz(fechaMRZ) {
         const year = parseInt(fechaMRZ.slice(0, 2), 10);
@@ -54,9 +31,10 @@ export function useMrzDecoder() {
                   dateOdBirthAdult: convertDateMrz(response.data_document['date_of_birth']) ?? 'n/d',
                   dateOfIssueAdult: convertDateMrz(response.data_document['expiration_date']) ?? 'n/d',
                   documentTypeAdult: (response.data_document['type'] === 'ID' && response.data_document['country'] === 'ARG') ? 'DNI' : response.data_document['type'],
-                  countryAdult: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
+                  countryAdult: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['nombre'],
+                  countryShortAdult: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
                 }
-            } else if(!dataStudent?.name && !dataStudent?.lastName) {
+            } else if(!parent && !dataStudent?.name && !dataStudent?.lastName) {
                     newDataDni = {
                         lastName: response.data_document['surname'] ?? 'n/d',
                         name: response.data_document['names'] ?? 'n/d',
@@ -65,11 +43,13 @@ export function useMrzDecoder() {
                         dateOdBirth: convertDateMrz(response.data_document['date_of_birth']) ?? 'n/d',
                         dateOfIssue: convertDateMrz(response.data_document['expiration_date']) ?? 'n/d',
                         documentType: (response.data_document['type'] === 'ID' && response.data_document['country'] === 'ARG') ? 'DNI' : response.data_document['type'],
-                        country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
+                        country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['nombre'],
+                        countryShort: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
                     }
-            } else {
+            } else if(!parent) {
                 newDataDni = {
-                    country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
+                    country: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['nombre'],
+                    countryShort: countryJson.find(country => country['alfa-3'] === response.data_document['country'].toUpperCase())['alfa-2']
                 }
             }
 
@@ -84,11 +64,8 @@ export function useMrzDecoder() {
 
     const lectorDocumentMrz = async (file, parent) => {
         const newDataDni = await getDataMrz(file, parent)
-        const newData = await getCuilAndAddress(file, parent)
-
-        const newDataUpdate = {...newData, ...newDataDni}
         
-        return newDataUpdate
+        return newDataDni
     }
 
     return { lectorDocumentMrz }
