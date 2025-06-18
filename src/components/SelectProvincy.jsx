@@ -61,7 +61,7 @@ export function SelectProvinces() {
         value={valueInput} 
         className={`w-full inputToSelect p-2.5 outline-none bg-black text-sky-300 placeholder:text-sky-300 cursor-pointer ${ isActive ? "rounded-t-lg" : "rounded-lg" }`} 
         placeholder='Provincia...'
-        readOnly
+        /* readOnly */
         required
       />
 

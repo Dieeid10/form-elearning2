@@ -58,6 +58,12 @@ export const Form = ({ data, validateData = null, title, nextForm = null, docume
       setSavingData(true)
       const result = await saveDate()
       if(result) setSavingData(false)
+      if(!result?.success) {
+        changeError(result?.message || 'Error al guardar los datos')
+      }
+      if(result?.success) {
+        changeError(null)
+      }
       return
     }
   

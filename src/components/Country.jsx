@@ -23,7 +23,7 @@ export function Country() {
     updateFilter(newFilter)
   }
 
-  const selectOption = (e) => {
+  const selectOption = async (e) => {
     const value = e.target.value
     const textButton = e.target.innerText
 
@@ -32,10 +32,13 @@ export function Country() {
     updateFilter("")
     setIsActive(false)
 
-    updateData({ 
-      country: textButton,
-      countryShort: value
-    })
+    await updateData(
+      { 
+        country: textButton,
+        countryShort: value
+      },
+      value !== "AR" ? ["province", "provinceShort", "locality"] : []
+    )
   }
 
   const visibilityOptions = () => {
@@ -56,7 +59,7 @@ export function Country() {
         value={valueInput}
         className={`w-full inputToSelect p-2.5 outline-none bg-black text-sky-500 placeholder:text-sky-300 text-sm cursor-pointer ${ isActive ? "rounded-t-lg" : "rounded-lg" }`} 
         placeholder='País...'
-        readOnly
+        /* readOnly */
         required 
       />
 

@@ -5,9 +5,12 @@ import { saveDataStudent } from "../services/saveDataStudent"
 export function useDataStudent () {
     const {dataStudent, setDataStudent} = useContext(DataContext)
 
-    const updateData = async (newData) => {
+    const updateData = async (newData, filteredToRemove = []) => {
+        const clearDataStudent = { ...dataStudent }
+        filteredToRemove.forEach(attr => delete clearDataStudent[attr])
+
         const newDataStudent = {
-            ...dataStudent,
+            ...clearDataStudent,
             ...newData
         }
         setDataStudent(newDataStudent)
